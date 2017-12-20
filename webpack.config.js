@@ -9,21 +9,15 @@ const version = String(require('./package.json').version)
 const publicPath = './' + version + '/'
 
 const config = {
-  entry: './src/index.tsx',
+  entry: [
+    'babel-polyfill',
+    './src/index.js'
+  ],
   module: {
     loaders: [
-      {
-        test: /\.tsx?$/,
-        loader: 'ts-loader'
-      },
       { test: /\.js$/, loaders: ['babel-loader?cacheDirectory'], exclude: /node_modules/ },
       { test: /\.css$/, loader: 'style!css' },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less')},
-      {
-        enforce: 'pre',
-        test: '/\.js$/',
-        loader: 'source-map-loader'
-      }
+      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less')}
     ]
   },
   resolve: {
