@@ -5,11 +5,12 @@ import {
     Link
   } from 'react-router-dom'
   import Home from "./iframe/Home";
+  import Indexs from "./iframe";
   const BasicExample = () => (
     <Router>
       <div>
-        <Route exact path="/" component={Home}/>
-        <Route path="/about" component={About}/>
+        <Route exact path="/" component={Indexs}/>
+        <Route path="/home" component={Home}/>
       </div>
     </Router>
   )

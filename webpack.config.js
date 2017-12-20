@@ -44,8 +44,8 @@ const config = {
     }),
     new HtmlWebpackPlugin({
       title: '',
-      filename: './index.html',
-      favicon: './icon.ico',
+      filename: '../index.html',
+      favicon: './hyacinth.ico',
     }),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.DefinePlugin({

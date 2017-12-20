@@ -24,7 +24,11 @@ module.exports = {
       {test: /\.js|jsx$/, loaders: ['babel-loader?cacheDirectory'], exclude: /node_modules/},
       {test: /\.css$/, loader: "style!css"},
       {test: /\.less/, loader: "style!css!less"},
-      {test: /\.(jpg|png|gif|svg|woff|eot|ttf)\??.*$/, loader: "url?limit=100000"}
+      {test: /\.(jpg|png|gif|svg|woff|eot|ttf)\??.*$/, loader: "url?limit=100000"},
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader'
+      }    
     ]
   },
   plugins:

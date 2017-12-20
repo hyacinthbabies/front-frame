@@ -2,6 +2,7 @@ import React from "react"
 import { Layout, Menu, Icon ,Row,Col} from 'antd';
 const { Header, Sider, Content } = Layout;
 import "./style.less";
+import Audio from "images/bigFish.mp3";
 class SiderDemo extends React.Component {
   state = {
     collapsed: false,
@@ -22,16 +23,20 @@ class SiderDemo extends React.Component {
           <div className="logo" />
           <Menu theme="dark" mode={this.state.collapsed?"vertical":"inline"} defaultSelectedKeys={['1']}>
             <Menu.Item key="1">
-              <Icon type="user" />
-              <span>nav 1</span>
+              <i className="iconfont article-menu-icon">&#xe60d;</i>
+              <span className="article-menu-item">阅读</span>
             </Menu.Item>
             <Menu.Item key="2">
-              <Icon type="video-camera" />
-              <span>nav 2</span>
+              <i className="iconfont article-menu-icon">&#xe628;</i>
+              <span className="article-menu-item">文章</span>
             </Menu.Item>
             <Menu.Item key="3">
-              <Icon type="upload" />
-              <span>nav 3</span>
+              <i className="iconfont article-menu-icon">&#xe614;</i>
+              <span className="article-menu-item">生活</span>
+            </Menu.Item>
+            <Menu.Item key="4">
+              <i className="iconfont article-menu-icon">&#xe601;</i>
+              <span className="article-menu-item">旅行</span>
             </Menu.Item>
           </Menu>
         </Sider>
@@ -42,12 +47,14 @@ class SiderDemo extends React.Component {
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
+            <audio preload="auto" controls style={{marginTop: 9}}>
+              <source src={Audio}/>
+              {/* <!-- <source src="audio/BlueDucks_FourFlossFiveSix.ogg">
+              <source src="audio/BlueDucks_FourFlossFiveSix.wav"> --> */}
+              </audio>
           </Header>
           <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-          <Row>
-            <Col span={12}>col-12</Col>
-            <Col span={12}>col-12</Col>
-          </Row>
+
           </Content>
         </Layout>
       </Layout>
