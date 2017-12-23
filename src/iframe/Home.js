@@ -1,18 +1,28 @@
 import React from "react"
-import { Layout, Menu, Icon ,Row,Col} from 'antd';
-const { Header, Sider, Content } = Layout;
+import { Layout, Menu, Icon ,Input,Card,Avatar} from 'antd';
+import {Link} from "react-router-dom";
 import "./style.less";
 import Audio from "images/bigFish.mp3";
+const { Header, Sider, Content } = Layout;
+const Search = Input.Search;
+const { Meta } = Card;
 class SiderDemo extends React.Component {
   state = {
     collapsed: false,
   };
+  componentDidMount(){
+    console.log(this.audio,"ddd")
+    
+    
+  }
   toggle = () => {
     this.setState({
       collapsed: !this.state.collapsed,
     });
   }
+  
   render() {
+    const examples = [2,3];
     return (
       <Layout className="components-layout-demo-custom-trigger">
         <Sider
@@ -21,7 +31,11 @@ class SiderDemo extends React.Component {
           collapsed={this.state.collapsed}
         >
           <div className="logo" />
-          <Menu theme="dark" mode={this.state.collapsed?"vertical":"inline"} defaultSelectedKeys={['1']}>
+          <Menu 
+          theme="dark" 
+          mode="inline"
+          defaultSelectedKeys={['1']} 
+          inlineCollapsed={this.state.collapsed}>
             <Menu.Item key="1">
               <i className="iconfont article-menu-icon">&#xe60d;</i>
               <span className="article-menu-item">阅读</span>
@@ -47,14 +61,14 @@ class SiderDemo extends React.Component {
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
             />
-            <audio preload="auto" controls style={{marginTop: 9}}>
+            <audio ref={ref=>this.audio= ref} preload="auto" controls style={{position: "absolute",top: 18}}>
               <source src={Audio}/>
               {/* <!-- <source src="audio/BlueDucks_FourFlossFiveSix.ogg">
               <source src="audio/BlueDucks_FourFlossFiveSix.wav"> --> */}
               </audio>
           </Header>
-          <Content style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 280 }}>
-
+          <Content style={{ margin: '24px 16px', display:"flex", background: '#fff', minHeight: 280 }}>
+              {this.props.children}
           </Content>
         </Layout>
       </Layout>

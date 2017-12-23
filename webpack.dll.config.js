@@ -8,7 +8,7 @@ const lib = [
   'react',
   'react-dom',
   'react-router',
-  'antd' 
+  'react-router-dom'
 ]
 
 

@@ -1,6 +1,5 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import Constant from "./web_modules/common/Constant";
 import Routes from "./Routes";
 
 //设置环境

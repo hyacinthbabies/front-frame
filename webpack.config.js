@@ -15,9 +15,14 @@ const config = {
   ],
   module: {
     loaders: [
-      { test: /\.js$/, loaders: ['babel-loader?cacheDirectory'], exclude: /node_modules/ },
-      { test: /\.css$/, loader: 'style!css' },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less')}
+      {test: /\.js$/, loaders: ['babel?cacheDirectory'], exclude: /node_modules/},
+      {test: /\.css$/, loader: 'style!css'},
+      {test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less', {publicPath: ''})},
+      {test: /\.(jpg|png|gif|svg|woff|eot|ttf)\??.*$/, loader: "url?limit=1"},
+      {
+        test: /\.mp3$/,
+        loader: 'file-loader'
+      }  
     ]
   },
   resolve: {
@@ -52,7 +57,7 @@ const config = {
       'process.env.NODE_ENV': JSON.stringify(env)
     }),
     // last css
-    new ExtractTextPlugin('./bundle.[hash].css'),
+    new ExtractTextPlugin('./bundle.[hash].css',{allChunks: true}),
   ]
 }
 
