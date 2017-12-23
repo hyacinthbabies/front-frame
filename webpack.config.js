@@ -1,24 +1,51 @@
-'use strict'
+const webpack = require("webpack");
+const path = require("path");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CleanWebpackPlugin = require("clean-webpack-plugin");
+const env = process.env.NODE_ENV;
+const version = String(require("./package.json").version);
 
-const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const CleanWebpackPlugin = require('clean-webpack-plugin')
-const env = process.env.NODE_ENV
-const version = String(require('./package.json').version)
-const publicPath = './' + version + '/'
+const publicPath = "./" + version + "/";
 
-const config = {
-  entry: [
-    'babel-polyfill',
-    './src/index.js'
-  ],
+module.exports = {
+  entry: "./src/index.js",
+  output: {
+    path: path.resolve(__dirname, "./dist" + version),
+    filename: "bundle.[hash].js",
+    publicPath,
+    //需要上传的目录
+    uploadPath: path.resolve(__dirname + "./dist/")
+  },
   module: {
-    loaders: [
-      {test: /\.js$/, loaders: ['babel?cacheDirectory'], exclude: /node_modules/},
-      {test: /\.css$/, loader: 'style!css'},
-      {test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css!less', {publicPath: ''})},
-      {test: /\.(jpg|png|gif|svg|woff|eot|ttf)\??.*$/, loader: "url?limit=1"},
+    rules: [
+      {
+        test: /\.js$/,
+        loaders: ["babel-loader?cacheDirectory"],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.(jpg|png|gif|svg)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: { limit: 8192 }
+          }
+          // 'file-loader',
+          // 'image-webpack-loader'
+        ]
+      },
+      {
+        test: /\.css/,
+        use: ["style-loader", "css-loader"]
+      },
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ["css-loader", "less-loader"]
+        })
+      },
       {
         test: /\.mp3$/,
         loader: 'file-loader'
@@ -26,39 +53,40 @@ const config = {
     ]
   },
   resolve: {
-      modulesDirectories: ['node_modules', 'web_modules']
-  },
-  output: {
-    path: './dist/' + version,
-    filename: 'bundle.[hash].js',
-    publicPath,
-    //需要上传的目录
-    uploadPath: './dist/',
+    extensions: [".js"],
+    modules: ["node_modules", "web_modules"],
+    alias: {
+      react: path.join(__dirname, "node_modules", "react")
+    }
   },
   plugins: [
     {
       apply: function apply(compiler) {
-        compiler.parser.plugin('expression global', function expressionGlobalPlugin() {
-          this.state.module.addVariable('global', "(function() { return this; }()) || Function('return this')()")
-          return false
-        })
+        compiler.parser.plugin(
+          "expression global",
+          function expressionGlobalPlugin() {
+            this.state.module.addVariable(
+              "global",
+              "(function() { return this; }()) || Function('return this')()"
+            );
+            return false;
+          }
+        );
       }
     },
-    new CleanWebpackPlugin(['dist'], {
-      verbose: true,
-    }),
     new HtmlWebpackPlugin({
-      title: '',
-      filename: '../index.html',
-      favicon: './hyacinth.ico',
+      title: "前端框架",
+      filename: "../index.html",
+      template: path.resolve(__dirname, "./entry/index.ejs"),
+      favicon: "./hyacinth.ico"
     }),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new CleanWebpackPlugin(["dist"], {
+      verbose: true
+    }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify(env)
+      "process.env.NODE_ENV": JSON.stringify(env)
     }),
     // last css
-    new ExtractTextPlugin('./bundle.[hash].css',{allChunks: true}),
+    new ExtractTextPlugin("./bundle.[hash].css")
   ]
-}
-
-module.exports = config
+};

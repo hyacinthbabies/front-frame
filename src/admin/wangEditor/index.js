@@ -25,7 +25,7 @@ class WangEditor extends React.Component {
 
   componentWillUnmount() {
     //销毁编辑器
-    this.destroyEditor();
+    // this.destroyEditor();
   }
 
   /**
@@ -33,40 +33,33 @@ class WangEditor extends React.Component {
    */
   initEditor = () => {
     //初始化编辑器
-    const editor = new Editor(this.props.id);
+    const editor = new Editor("#editor");
     //请求上传图片的接口，放到服务器上
-    editor.config.uploadImgUrl = `file/upload`;
+    editor.customConfig.uploadImgServer = `file/upload`;
     //图片名称，后端约定 file
-    editor.config.uploadImgFileName = "file";
+    editor.customConfig.uploadFileName = "file";
     //表情配置
-    editor.config.emotions = {
-      default: {
-        title: "微博表情", // 组名称
-        data: emotion
-      }
-    };
-    // 为当前的editor配置密钥
-    editor.config.mapAk = "LsrQFnYCVKtv98xw4Dwi7qxYfmA2Xj7c";
+    // editor.customConfig.emotions = {
+    //   default: {
+    //     title: "微博表情", // 组名称
+    //     data: emotion
+    //   }
+    // };
     //将后台返回的图片地址插入编辑器
-    editor.config.uploadImgFns.onload = function(resultText, xhr) {
-      const url = `/pic/${resultText}`;
-      const originalName = editor.uploadImgOriginalName || "";
-      editor.command(
-        null,
-        "insertHtml",
-        '<img src="' +
-          url +
-          '" alt="' +
-          originalName +
-          '" style="max-width:100%;"/>'
-      );
+    editor.customConfig.uploadImgHooks = (resultText, xhr)=> {
+      customInsert:  (insertImg, result, editor)=> {
+        // 图片上传并返回结果，自定义插入图片的事件（而不是编辑器自动插入图片！！！）
+        // insertImg 是插入图片的函数，editor 是编辑器对象，result 是服务器端返回的结果
+
+        // 举例：假如上传图片成功后，服务器端返回的是 {url:'....'} 这种格式，即可这样插入图片：
+        var url = result.url
+        insertImg(url)
+
+        // result 必须是一个 JSON 格式字符串！！！否则报错
+    }
+
     };
-    editor.config.menus = $.map(Editor.config.menus, function(item, key) {
-      if (item === "location") {
-        return null;
-      }
-      return item;
-    });
+  
     //监听编辑器内容变化，必须放到editor.create()之前
     editor.onchange = () => {
       this.props.onChange(editor.$txt.html());
@@ -91,7 +84,7 @@ class WangEditor extends React.Component {
     const { placeholder } = this.props;
     return (
       <div className="wangeditor">
-        <div style={{ height: 300 }} id={this.props.id}>
+        <div style={{ height: 250 }} id="editor">
           {placeholder && <p>{this.props.placeholder}</p>}
         </div>
       </div>

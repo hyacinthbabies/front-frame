@@ -5,13 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": "monk build",
-    "local.dev": "cross-env NODE_ENV=development webpack-dev-server --config webpack.config.dev.js --content-base --inline --hot --display-modules --profile --history-api-fallback",
-    "local.prod": "cross-env NODE_ENV=production webpack-dev-server --config webpack.config.dev.js --content-base --inline --hot",
-    "local.build": "cross-env NODE_ENV=development webpack -p --config webpack.config.dev.js --inline --hot",
-    "local.dll": "webpack --config  webpack.dll.config.js --progress --display-modules --profile",
-    "formatAll": "prettier --write 'src/**/*.tsx' ",
-    "precommit": "lint-staged"
+    "local.dev": "webpack-dev-server --history-api-fallback --config webpack.config.dev.js --progress",
+    "local.prod": "NODE_ENV=production webpack-dev-server --config webpack.config.dev.js --content-base public/ --port 8080 --inline --hot",
+    "local.test": "NODE_ENV=test webpack-dev-server --config webpack.config.dev.js --content-base public/ --port 8080 --inline --hot",
+    "local.dll": "webpack --config webpack.dll.config.js --progress",
+    "build:prod": "NODE_ENV=production webpack -p",
+    "build:develop": "NODE_ENV=development webpack -p",
+    "build:test": "NODE_ENV=test webpack -p",
+    "precommit": "lint-staged",
+    "formatAll": "prettier --write 'src/**/*.js' "
   },
   "author": "song",
   "license": "ISC",
@@ -24,7 +26,7 @@
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-transition-group": "^2.2.1",
-    "wangeditor": "^2.1.23"
+    "wangeditor": "^3.0.15"
   },
   "devDependencies": {
     "babel": "^6.23.0",
@@ -53,8 +55,8 @@
     "source-map-loader": "^0.2.1",
     "style-loader": "^0.13.1",
     "url-loader": "^0.6.2",
-    "webpack": "^1.13.1",
-    "webpack-dev-server": "^1.16.2"
+    "webpack": "^3.8.1",
+    "webpack-dev-server": "^2.9.1"
   },
   "lint-staged": {
     "*.tsx": [

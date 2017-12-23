@@ -2,6 +2,13 @@ import React from "react"
 import {Input,List, Avatar,Spin} from "antd";
 const Search = Input.Search;
 class Reading extends React.Component {
+  state = {
+    content:"'"
+  }
+  onHandleItem = val =>{
+      console.log(val,"val");
+      this.setState({content:val.title});
+  }
   render() {
     const data = [{"gender":"male","name":{"title":"mr","first":"estéban","last":"rolland"},"email":"estéban.rolland@example.com","nat":"FR"},{"gender":"female","name":{"title":"miss","first":"beatrice","last":"gauthier"},"email":"beatrice.gauthier@example.com","nat":"CA"},{"gender":"female","name":{"title":"mrs","first":"elizabeth","last":"taylor"},"email":"elizabeth.taylor@example.com","nat":"NZ"},{"gender":"male","name":{"title":"mr","first":"yassin","last":"heinhuis"},"email":"yassin.heinhuis@example.com","nat":"NL"},{"gender":"male","name":{"title":"mr","first":"بنیامین","last":"نكو نظر"},"email":"بنیامین.نكونظر@example.com","nat":"IR"}]
     return (
@@ -18,7 +25,7 @@ class Reading extends React.Component {
             // loadMore={loadMore}
             dataSource={data}
             renderItem={item => (
-              <List.Item>
+              <List.Item onClick={this.onHandleItem.bind(null,item.name)}>
                 <List.Item.Meta
                   avatar={<Avatar src="http://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
                   title={<a href="https://ant.design">{item.name.last}</a>}
@@ -34,8 +41,8 @@ class Reading extends React.Component {
           <div style={{ lineHeight: "49px",height: 49,padding: "0 10px",borderBottom: "1px solid #ddd"}}>
               日期：2017-12-21
           </div>
-          <div style={{flex:"auto"}}>
-
+          <div style={{flex:"auto",padding:10}}>
+              {this.state.content}
           </div>
       </div>]
     );

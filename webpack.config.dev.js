@@ -1,48 +1,91 @@
-'use strict'
-
-const webpack = require('webpack')
-const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-const env = process.env.NODE_ENV
+const webpack = require("webpack");
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const env = process.env.NODE_ENV;
 
 module.exports = {
-  target: 'web',
-  entry: ['babel-polyfill', './src/index.js'],
+  target: "web",
+  entry: ["babel-polyfill", "./src/index.js"],
   output: {
-    path: '/',
-    filename: 'bundle.js',
+    filename: "bundle.js",
+    publicPath: "/",
+    path: __dirname + "/dist"
   },
+  devtool: "source-map",
   resolve: {
-    modulesDirectories: ['node_modules', 'web_modules']
+    extensions: [".js"],
+    modules: ["node_modules", "web_modules"],
+    alias: {
+      react: path.join(__dirname, "node_modules", "react")
+    }
   },
-  externals: {
-    'pinyin': "pinyin"
-  },
-  //devtool相关说明，https://segmentfault.com/a/1190000004280859，可自己按照实际情况调整
-  devtool: "#eval",
   module: {
-    loaders: [
-      {test: /\.js|jsx$/, loaders: ['babel?cacheDirectory'], exclude: /node_modules/},
-      {test: /\.css$/, loader: "style!css"},
-      {test: /\.less/, loader: "style!css!less"},
-      {test: /\.(jpg|png|gif|svg|woff|eot|ttf)\??.*$/, loader: "url?limit=100000"},
+    rules: [
+      {
+        test: /\.js?$/,
+        use: ["babel-loader"],
+        // exclude: /node_modules/,
+        include: [
+          path.resolve(__dirname, "src")
+        ]
+      },
+      {
+        enforce: "pre",
+        test: "/.js$/",
+        loader: "source-map-loader"
+      },
+      {
+        test: /\.(jpg|png|gif|svg)$/,
+        use: [
+          {
+            loader: "url-loader",
+            options: { limit: 8192 }
+          },
+          {
+            loader: "file-loader",
+            options: {}
+          }
+        ]
+      },
+      {
+        test: /\.less$/,
+        use: ["style-loader", "css-loader", "less-loader"]
+      },
+      {
+        test: /\.css/,
+        use: ["style-loader", "css-loader"]
+      },
       {
         test: /\.mp3$/,
         loader: 'file-loader'
-      }    
+      }  
     ]
   },
-  plugins:
-    [
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest: require('./public/manifest.json'),
-      }),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify(env)
-      }),
-      // 自动打开浏览器
-      new OpenBrowserPlugin({
-          browser: 'Google Chrome'
-      })
-    ]
+  devServer: {
+    historyApiFallback: {
+      index: "dist/index.html"
+    },
+    port: 8080,
+    host: "localhost",
+    // contentBase: path.resolve(__dirname, "dist"),
+    // 输出文件的路径
+
+    publicPath: "/",
+    // 和上文 output 的“publicPath”值保持一致
+    hot: true
+  },
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.DllReferencePlugin({
+    //   manifest: path.resolve(__dirname, "./public/manifest.json")
+    // }),
+    new webpack.DefinePlugin({
+      "process.env.NODE_ENV": JSON.stringify(env)
+    }),
+    new HtmlWebpackPlugin({
+      title: "前端框架",
+      template: path.resolve(__dirname, "./entry/index.ejs"),
+      favicon: "./hyacinth.ico"
+    })
+  ]
 };

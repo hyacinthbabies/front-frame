@@ -26,6 +26,26 @@ class Index extends React.Component {
     logout = ()=>{
         this.props.history.push("/");
     }
+
+    /**
+     * 点击菜单
+     */
+    onClickMenu = item=>{
+        switch(item.key){
+            case "1":
+                this.props.history.push("/admin/articleAdd");
+                break;
+            case "2":
+                this.props.history.push("/admin/articleList");
+                break;
+            case "3":
+                this.props.history.push("/admin/userList");
+                break;
+            default:
+                this.props.history.push("/admin/articleAdd");
+                break;
+        }
+    }
   
     render() {
         return (
@@ -42,14 +62,14 @@ class Index extends React.Component {
                 mode="inline"
                 theme="dark"
                 inlineCollapsed={this.state.collapsed}
+                onClick={this.onClickMenu}
                 >
                 <SubMenu key="sub1" title={<span><Icon type="mail" /><span>文章设置</span></span>}>
-                    <Menu.Item key="5">添加文章</Menu.Item>
-                    <Menu.Item key="6">文章列表</Menu.Item>
+                    <Menu.Item key="1">添加文章</Menu.Item>
+                    <Menu.Item key="2">文章列表</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>用户设置</span></span>}>
-                    <Menu.Item key="8">新增用户</Menu.Item>
-                    <Menu.Item key="9">用户列表</Menu.Item>
+                    <Menu.Item key="3">用户列表</Menu.Item>
                 </SubMenu>
                 </Menu>
 
