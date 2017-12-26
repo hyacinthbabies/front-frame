@@ -14,6 +14,7 @@ import AdminHome from "./admin";
 import ArticleAdd from "./admin/ArticleAdd";
 import ArticleList from "./admin/ArticleList";
 import UserList from "./admin/userList";
+import About from "./about";
 // 第一种搭配Router使用<Router history={history}/>
 // import createBrowserHistory from 'history/createBrowserHistory'
 // const history = createBrowserHistory()
@@ -50,6 +51,7 @@ const BasicExample = () => (
     <Switch>
       <Route exact path="/" component={Indexs}/>
       <Route path="/login" component={Login}/>
+      <Route path="/about" component={About}/>
       {/* 管理系统 */}
       <PrivateRoute path="/admin" component={props=>(
           <AdminHome {...props}>
@@ -68,6 +70,7 @@ const BasicExample = () => (
           </Home>
         )}
       />
+
 
       
     </Switch>
