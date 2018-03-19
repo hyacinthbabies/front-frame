@@ -1,5 +1,11 @@
 import React from "react";
 import { Timeline,Card,Icon,Avatar,Row,Col } from "antd";
+import "style/main.css";
+import Newtouch from "../web_modules/images/newtouch.png";
+import Step from "images/step.png";
+import Home from "images/app.png";
+import Nrb from "images/nrb.png";
+import Eds from "images/eds.png";
 const { Meta } = Card;
 
 /**
@@ -55,65 +61,64 @@ class Index extends React.Component{
             <div className = "content-block" id="testimonials" style={{display:"flex",justifyContent:"space-around"}}>
                 <Card
                     style={{ width: 300 }}
-                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
                 >
                     <Meta
                     title="资金平台"
-                    description="This is the description"
+                    description="后台管理系统"
                     />
+                    <div className="card-content-hide">react、antd、webpack、loadsh</div>
               </Card>
               <Card
                     style={{ width: 300 }}
-                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                    cover={<img alt="example" src={Nrb}/>}
                 >
                     <Meta
                     title="农人帮"
                     description="This is the description"
                     />
+                    <div className="card-content-hide">react、antd、webpack、loadsh</div>
               </Card>
               <Card
                     style={{ width: 300 }}
-                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                    cover={<img alt="example" src={Home} />}
                 >
                     <Meta
                     title="村花帮app"
                     description="This is the description"
                     />
+                    <div className="card-content-hide">react、antd、webpack、loadsh</div>
               </Card>
             </div>	
             <div className = "content-block" id="testimonials" style={{display:"flex",justifyContent:"space-around"}}>
                 <Card
                     style={{ width: 300 }}
-                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                    cover={<img alt="example" src={Eds} />}
                 >
                     <Meta
                     title="NewtouchEDS微信开发与维护"
                     description="This is the description"
                     />
+                    <div className="card-content-hide">react、antd、webpack、loadsh</div>
               </Card>
               <Card
                     style={{ width: 300 }}
-                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                    cover={<img alt="example" src={Newtouch}/>}
                 >
                     <Meta
                     title="新致云管理控制台"
                     description="This is the description"
                     />
+                    <div className="card-content-hide">react、antd、webpack、loadsh</div>
               </Card>
               <Card
                     style={{ width: 300 }}
-                    cover={<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />}
-                    actions={[<Icon type="setting" />, <Icon type="edit" />, <Icon type="ellipsis" />]}
+                    cover={<img alt="example" src={Step} />}
                 >
                     <Meta
                     title="NewtouchStep团队协作"
                     description="This is the description"
                     />
+                    <div className="card-content-hide">react、antd、webpack、loadsh</div>
               </Card>
             </div>
             <div className="content-block" id="contact">

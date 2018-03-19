@@ -6,16 +6,16 @@ const CleanWebpackPlugin = require("clean-webpack-plugin");
 const env = process.env.NODE_ENV;
 const version = String(require("./package.json").version);
 
-const publicPath = "./" + version + "/";
+const publicPath = "/" + version + "/";
 
 module.exports = {
   entry: "./src/index.js",
   output: {
-    path: path.resolve(__dirname, "./dist" + version),
+    path: path.resolve(__dirname, "./dist/" + version),
     filename: "bundle.[hash].js",
     publicPath,
     //需要上传的目录
-    uploadPath: path.resolve(__dirname + "./dist/")
+    // uploadPath: path.resolve(__dirname + "./dist/")
   },
   module: {
     rules: [
@@ -24,17 +24,7 @@ module.exports = {
         loaders: ["babel-loader?cacheDirectory"],
         exclude: /node_modules/
       },
-      {
-        test: /\.(jpg|png|gif|svg)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: { limit: 8192 }
-          }
-          // 'file-loader',
-          // 'image-webpack-loader'
-        ]
-      },
+      {test: /\.(jpg|png|gif|svg|woff|eot|ttf)\??.*$/, loader: "url-loader?limit=100000"},
       {
         test: /\.css/,
         use: ["style-loader", "css-loader"]
@@ -59,10 +49,25 @@ module.exports = {
       react: path.join(__dirname, "node_modules", "react")
     }
   },
+  devServer: {
+    historyApiFallback: {
+      index: "dist/index.html"
+    },
+    // contentBase: path.resolve(__dirname, "dist"),
+    // 输出文件的路径
+
+    publicPath: publicPath,
+    // 和上文 output 的“publicPath”值保持一致
+    hot: true,
+    proxy: [{
+        context: ["/file", "/api"],
+        target: "http://hyacinthbaby.com/",
+    }]
+  },
   plugins: [
     {
       apply: function apply(compiler) {
-        compiler.parser.plugin(
+        compiler.plugin(
           "expression global",
           function expressionGlobalPlugin() {
             this.state.module.addVariable(

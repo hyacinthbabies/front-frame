@@ -1,0 +1,52 @@
+.article-container .article-list{
+    flex: auto;
+    padding: 10px;
+    height: 1vh;
+    overflow-y: scroll;
+    min-height: 300px;
+}
+.content-container{
+    max-width: 75%;
+    flex:3;
+    border-left:1px solid #ddd;
+    box-shadow:-2px 0 4px #ddd;
+    display:flex;
+    flex-direction:column;
+    z-index: 999;
+    .publish-date{
+        line-height: 49px;
+        height: 49px;
+        padding: 0 10px;
+        border-bottom: 1px solid #ddd;
+    }
+    .publish-detail{
+        flex:auto;
+        padding:10px;
+        height:1vh;
+        overflow-y:scroll;
+        min-height:300px;
+    }
+    img{
+        max-width: 70%;
+    }
+    #content blockquote{
+        color: #666;
+        padding: 1px 23px;
+        margin: 22px 0;
+        border-left: 4px solid #cbcbcb;
+        background-color: #f8f8f8;
+    }
+    #content blockquote > p{
+        margin:8px 0;
+    }
+    #content table{
+        border-top: 1px solid #ccc;
+        border-left: 1px solid #ccc;
+    }
+    #content table td{
+        border-bottom: 1px solid #ccc;
+        text-align: center;
+        border-right: 1px solid #ccc;
+        padding: 3px 5px;
+    }
+}

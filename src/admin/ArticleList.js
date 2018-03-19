@@ -1,43 +1,49 @@
 import React from "react"
-import {Table,Divider} from "antd"
-const columns = [{
-    title: 'Name',
-    dataIndex: 'name',
-  }, {
-    title: 'Age',
-    dataIndex: 'age',
-  }, {
-    title: 'Address',
-    dataIndex: 'address',
-  },
-  {
-      title:"操作",
-      render:()=>{
-          return <span>
-              <a>编辑</a>
-              <Divider type="vertical" />
-              <a>详情</a>
-              <Divider type="vertical" />
-              <a>删除</a>
-              </span>
-      }
-  }
-];
-  const data = [];
-  for (let i = 0; i < 46; i++) {
-    data.push({
-      key: i,
-      name: `Edward King ${i}`,
-      age: 32,
-      address: `London, Park Lane no. ${i}`,
-    });
-  }
+import {Table,Divider,message} from "antd"
+import ApiUtil from "utils/ApiUtil"
+
   
 class ArticleList extends React.Component{
+  constructor(props){
+    super(props);
+    this.columns = [{
+      title: '文章编号',
+      dataIndex: '_id',
+    }, {
+      title: '文章内容',
+      dataIndex: 'articleName',
+    }, {
+      title: '作者名称',
+      dataIndex: 'authorName',
+    },{
+      title: '文章日期',
+      dataIndex: 'articleDate',
+    },{
+      title: '文章类型',
+      dataIndex: 'articleType',
+    },
+    {
+        title:"操作",
+        render:record=>{
+            return <span>
+                <a onClick={this.onHandleEdit.bind(null,record._id)}>编辑</a>
+                <Divider type="vertical" />
+                <a onClick={this.getArticalDetail.bind(null,record._id)}>详情</a>
+                <Divider type="vertical" />
+                <a onClick={this.deleteArticle.bind(null,record._id)}>删除</a>
+                </span>
+        }
+    }];
+  }
     state = {
         selectedRowKeys: [], // Check here to configure the default column
         loading: false,
+        data:[]//表格数据
       };
+
+    componentDidMount(){
+      this.getArticleList();
+    }
       start = () => {
         this.setState({ loading: true });
         // ajax request after empty completing
@@ -52,8 +58,38 @@ class ArticleList extends React.Component{
         console.log('selectedRowKeys changed: ', selectedRowKeys);
         this.setState({ selectedRowKeys });
       }
+    
+    getArticleList = ()=>{
+      let param = {
+        articleType:"SKILL_ID",
+        keyword:""
+      }
+      //查询列表
+      ApiUtil(param,"/api/content/list")
+      .then(res=>{
+        this.setState({data:res});
+      })
+    }
+
+    //查询详情
+    getArticalDetail = id =>{
+      this.props.history.push(`/admin/articleDetail/${id}`);
+    }
+
+    onHandleEdit = id=>{
+      this.props.history.push(`/admin/articleAdd`,{id:id});
+    }
+
+    deleteArticle = id=>{
+      ApiUtil({articleId:id},"/api/removeArticle")
+      .then(res=>{
+        this.getArticleList();
+        message.success("删除成功");
+      });
+    }
+
     render(){
-        const { loading, selectedRowKeys } = this.state;
+        const { loading, selectedRowKeys,data } = this.state;
         const rowSelection = {
           selectedRowKeys,
           onChange: this.onSelectChange,
@@ -61,7 +97,7 @@ class ArticleList extends React.Component{
         const hasSelected = selectedRowKeys.length > 0;
     
         return <div style={{width:"100%"}}>
-        <Table rowSelection={rowSelection} columns={columns} dataSource={data} />
+        <Table rowSelection={rowSelection} columns={this.columns} dataSource={data} />
       </div>
 
     }

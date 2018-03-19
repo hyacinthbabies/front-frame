@@ -13,8 +13,10 @@ import Login from "./admin/Login";
 import AdminHome from "./admin";
 import ArticleAdd from "./admin/ArticleAdd";
 import ArticleList from "./admin/ArticleList";
+import ArticleDetail from "./admin/ArticleDetail";
 import UserList from "./admin/userList";
 import About from "./about";
+import HomePage from "./home";
 // 第一种搭配Router使用<Router history={history}/>
 // import createBrowserHistory from 'history/createBrowserHistory'
 // const history = createBrowserHistory()
@@ -52,11 +54,13 @@ const BasicExample = () => (
       <Route exact path="/" component={Indexs}/>
       <Route path="/login" component={Login}/>
       <Route path="/about" component={About}/>
+      <Route path="/home" component={HomePage}/>
       {/* 管理系统 */}
       <PrivateRoute path="/admin" component={props=>(
           <AdminHome {...props}>
               <PrivateRoute path="/admin/articleAdd" component={ArticleAdd}/>   
               <PrivateRoute path="/admin/articleList" component={ArticleList}/> 
+              <PrivateRoute path="/admin/articleDetail/:id" component={ArticleDetail}/> 
               <PrivateRoute path="/admin/userList" component={UserList}/>                 
           </AdminHome>
       )} />  
@@ -65,8 +69,12 @@ const BasicExample = () => (
         path="/article"
         component={props =>(
           <Home {...props}>
+            <Route path="/article/skill" component={Reading}/>
             <Route path="/article/reading" component={Reading}/>
-            <Route path="/article/life" component={Login}/>
+            <Route path="/article/article" component={Reading}/>
+            <Route path="/article/life" component={Reading}/>
+            <Route path="/article/travel" component={Reading}/>
+            {/* <Route path="/article/life" component={Login}/> */}
           </Home>
         )}
       />

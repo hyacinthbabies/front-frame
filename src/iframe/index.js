@@ -7,9 +7,14 @@ class Index extends React.Component{
         <div className="header-navbar">
             <a className="header-logo" href="index.html">hyacinth</a>
         </div>
+        <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg" style={{position:"absolute"}}>
+            <text style={{fontFamily:"microsoft yahei",fontSize:20}} x="100" y="100" fill="#cd0000">☃️
+                <animate attributeName="x" values="160;100;160" dur="3s" repeatCount="indefinite" />
+            </text>
+        </svg>
         <nav className="main-nav">
             <ul>
-                <li><Link to="/">主页</Link></li>
+                <li><Link to="/home">主页</Link></li>
                 <li><Link to="/article/reading">文档</Link></li>
                 <li><Link to="/life">阅读</Link></li>
                 <li><Link to="/about">关于我</Link></li>

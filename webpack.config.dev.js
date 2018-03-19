@@ -34,19 +34,7 @@ module.exports = {
         test: "/.js$/",
         loader: "source-map-loader"
       },
-      {
-        test: /\.(jpg|png|gif|svg)$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: { limit: 8192 }
-          },
-          {
-            loader: "file-loader",
-            options: {}
-          }
-        ]
-      },
+      {test: /\.(jpg|png|gif|svg|woff|eot|ttf)\??.*$/, loader: "url-loader?limit=100000"},
       {
         test: /\.less$/,
         use: ["style-loader", "css-loader", "less-loader"]
@@ -72,7 +60,12 @@ module.exports = {
 
     publicPath: "/",
     // 和上文 output 的“publicPath”值保持一致
-    hot: true
+    hot: true,
+    proxy: [{
+        context: ["/file", "/api"],
+        // target: "http://hyacinthbaby.com",
+        target: "http://127.0.0.1:3000"
+    }]
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
@@ -83,7 +76,7 @@ module.exports = {
       "process.env.NODE_ENV": JSON.stringify(env)
     }),
     new HtmlWebpackPlugin({
-      title: "前端框架",
+      title: "个人小站",
       template: path.resolve(__dirname, "./entry/index.ejs"),
       favicon: "./hyacinth.ico"
     })

@@ -7,7 +7,6 @@
     url('//at.alicdn.com/t/font_515216_rxex0qis9mx3whfr.svg#iconfont') format('svg');
   }
   
-  
 
 .iconfont{
     font-family:"iconfont" !important;
@@ -222,4 +221,36 @@ margin: 16px;
         color: #000;
     }
       
+}
+
+.about-container {
+    .ant-card{
+        text-align: center;
+        height: 260px;
+        overflow: hidden;
+    }
+    .ant-card-meta-detail{
+        margin-bottom: 26px;
+    }
+    .ant-card-cover{
+        text-align: center;
+        display: flex;
+        justify-content: center;
+    }
+    .ant-card-cover>img{
+        width: 100%;
+        height: 159px;
+        transition: 0.4s;
+        -moz-transition: 0.4s; 
+        -webkit-transition: 0.4s;
+        -o-transition: 0.4s; 
+    }
+    .ant-card:hover{
+        .ant-card-cover>img{
+            width: 40%;
+            height: 80px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+        }
+    }
 }

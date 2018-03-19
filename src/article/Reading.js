@@ -1,20 +1,75 @@
 import React from "react"
 import {Input,List, Avatar,Spin} from "antd";
+import ApiUtil from "utils/ApiUtil";
+import "./style.less";
 const Search = Input.Search;
+
 class Reading extends React.Component {
   state = {
-    content:"'"
+    date:"",
+    data:[],
+    currentId:"",
+    loading:false
   }
-  onHandleItem = val =>{
-      console.log(val,"val");
-      this.setState({content:val.title});
+  componentDidMount(){
+    const {state} = this.props.location;
+    
+    //如果从首页入口进去，则默认查询技术类文档
+    let param = {
+      articleType:"SKILL_ID",
+      keyword:""
+    }
+    if(state && state.id){
+      param.articleType = state.id;
+    }
+    this.getArticleList(param);
   }
+
+  getArticleList = (param)=>{
+    //查询列表
+    ApiUtil(param,"/api/content/list")
+    .then(res=>{
+      if(res.length > 0 ){
+        this.onHandleItem(res[0]._id);
+      }
+      this.setState({data:res});
+    })
+  }
+
+  //查询详情
+  onHandleItem = id =>{
+    this.setState({currentId:id,loading:true});
+      ApiUtil({},`/api/queryContent/${id}`)
+      .then(res=>{
+        this.setState({date:res.articleDate,Comment});
+        $("#content").html(res.articleContent); 
+        this.setState({loading:false}) 
+      })
+  }
+
+  //模糊搜索
+  onSearch = val=>{
+    const {state} = this.props.location;
+    
+    //如果从首页入口进去，则默认查询技术类文档
+    let param = {
+      articleType:"SKILL_ID"
+    }
+    if(state && state.id){
+      param.articleType = state.id;
+      param.keyword = val
+    }
+    this.getArticleList(param)
+  }
+
   render() {
-    const data = [{"gender":"male","name":{"title":"mr","first":"estéban","last":"rolland"},"email":"estéban.rolland@example.com","nat":"FR"},{"gender":"female","name":{"title":"miss","first":"beatrice","last":"gauthier"},"email":"beatrice.gauthier@example.com","nat":"CA"},{"gender":"female","name":{"title":"mrs","first":"elizabeth","last":"taylor"},"email":"elizabeth.taylor@example.com","nat":"NZ"},{"gender":"male","name":{"title":"mr","first":"yassin","last":"heinhuis"},"email":"yassin.heinhuis@example.com","nat":"NL"},{"gender":"male","name":{"title":"mr","first":"بنیامین","last":"نكو نظر"},"email":"بنیامین.نكونظر@example.com","nat":"IR"}]
+    const {data,date,currentId,Comment,loading} = this.state;
     return (
-      [<div style={{flex:1}} key="1">
+      [<div className="article-container" style={{flex:1,display: "flex",
+        flexDirection: "column"}} key="1">
         <div className="title-search">
           <Search 
+            onSearch={this.onSearch}
             placeholder="输入搜索内容"/>
         </div>
         <div className="article-list">
@@ -25,11 +80,10 @@ class Reading extends React.Component {
             // loadMore={loadMore}
             dataSource={data}
             renderItem={item => (
-              <List.Item onClick={this.onHandleItem.bind(null,item.name)}>
+              <List.Item onClick={this.onHandleItem.bind(null,item._id)} style={item._id === currentId?{background:"#f1ededc7"}:{background:"#fff"}}>
                 <List.Item.Meta
-                  avatar={<Avatar src="http://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />}
-                  title={<a href="https://ant.design">{item.name.last}</a>}
-                  description="明天是平安夜"
+                  title={<span>{item.articleName}</span>}
+                  description={`时间：${date}`}
                 />
               </List.Item>
             )}
@@ -37,13 +91,16 @@ class Reading extends React.Component {
 
         </div>
       </div>,
-      <div style={{flex:3,borderLeft:"1px solid #ddd",boxShadow:"-2px 0 4px #ddd",display:"flex",flexDirection:"column"}} key="2">
-          <div style={{ lineHeight: "49px",height: 49,padding: "0 10px",borderBottom: "1px solid #ddd"}}>
-              日期：2017-12-21
+      <div className="content-container" key="2">
+          <div className="publish-date">
+              发布于：{date}
           </div>
-          <div style={{flex:"auto",padding:10}}>
-              {this.state.content}
+          <div className="publish-detail">
+            <Spin spinning={loading}>
+              <div id="content"></div>
+            </Spin> 
           </div>
+          
       </div>]
     );
   }

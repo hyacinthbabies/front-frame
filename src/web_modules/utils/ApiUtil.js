@@ -4,10 +4,10 @@ import axios from "axios";
 const ajax = (
   data,
   url,
-  type = "POST",
+  type = "GET",
+  isFormData,  
   timeout = 10000,
-  root = env.BASE_URl,
-  isFormData
+  root = env,
 ) => {
   const headers = { "Content-Type": "application/json" };
   const tokens = window.localStorage.getItem("x-auth-token");
@@ -43,24 +43,13 @@ const ajax = (
 
     if (contentType && contentType.indexOf("application/json") !== -1) {
       let { retCode, retMsg } = data;
-
-      // if (retCode === "10005") {
-      //   window.localStorage.removeItem("x-auth-token");
-      //   window.location.href = "/login" + "长时间未操作，请重新登陆";
-      //   return Promise.reject(retMsg);
-      // }
-
-      // if (retCode !== "10000") {
-      //   return Promise.reject(retMsg);
-      // }
-
       return Promise.resolve(data);
     } else {
       return Promise.reject(new Error("the response is not JSON"));
     }
   });
 };
-
+export default ajax;
 // import axios from 'axios';
 // import env from "../config";
 // // axios 配置
