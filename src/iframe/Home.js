@@ -32,11 +32,15 @@ class SiderDemo extends React.Component {
     })
   }
 
-  toggle = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
-    });
+  goHome = ()=>{
+    this.props.history.push("/");
   }
+
+  // toggle = () => {
+  //   this.setState({
+  //     collapsed: !this.state.collapsed,
+  //   });
+  // }
 
   /**
    * 点击菜单
@@ -69,10 +73,10 @@ class SiderDemo extends React.Component {
         <Sider
           trigger={null}
           collapsible
-          collapsed={this.state.collapsed}
+          // collapsed={this.state.collapsed}
         >
-          <div style={{paddingTop: 20,padding: 10,margin:"20px 32px",borderBottom: "2px solid #fff"}}>
-            <img src={HomeImg} style={{width:40,height:40}}/>
+          <div className="article-iframe-header">
+            <img src={HomeImg} style={{width:40,height:40,cursor:"pointer"}} onClick={this.goHome}/>
             <span style={{color:"#fff",paddingTop:10,marginLeft:20}}>分享</span>            
           </div>
           
@@ -80,7 +84,7 @@ class SiderDemo extends React.Component {
           theme="dark" 
           mode="inline"
           defaultSelectedKeys={[this.state.currentKey]} 
-          inlineCollapsed={this.state.collapsed}
+          // inlineCollapsed={this.state.collapsed}
           onClick={this.onClickMenu}>
             <Menu.Item key="1">
               <Icon className="iconfont article-menu-icon">&#xe60d;</Icon>
@@ -112,12 +116,12 @@ class SiderDemo extends React.Component {
         </Sider>
         <Layout>
           <Header style={{ background: '#fff', padding: 0 }}>
-            <Icon
+            {/* <Icon
               className="trigger"
               type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
               onClick={this.toggle}
-            />
-            <audio ref={ref=>this.audio= ref} preload="auto" controls style={{position: "absolute",top: 18}}>
+            /> */}
+            <audio ref={ref=>this.audio= ref} preload="auto" controls style={{position: "absolute",top: 18,marginLeft:20}}>
               <source src={Audio}/>
               {/* <!-- <source src="audio/BlueDucks_FourFlossFiveSix.ogg">
               <source src="audio/BlueDucks_FourFlossFiveSix.wav"> --> */}

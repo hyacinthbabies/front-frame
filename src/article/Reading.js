@@ -1,15 +1,16 @@
 import React from "react"
-import {Input,List, Avatar,Spin} from "antd";
+import {Input,List, Avatar,Spin,Icon} from "antd";
 import ApiUtil from "utils/ApiUtil";
 import "./style.less";
 const Search = Input.Search;
 
 class Reading extends React.Component {
   state = {
-    date:"",
+    articleDetail:"",
     data:[],
     currentId:"",
-    loading:false
+    loading:false,
+    collapsed:false
   }
   componentDidMount(){
     const {state} = this.props.location;
@@ -41,7 +42,7 @@ class Reading extends React.Component {
     this.setState({currentId:id,loading:true});
       ApiUtil({},`/api/queryContent/${id}`)
       .then(res=>{
-        this.setState({date:res.articleDate,Comment});
+        this.setState({articleDetail:res,Comment});
         $("#content").html(res.articleContent); 
         this.setState({loading:false}) 
       })
@@ -62,10 +63,16 @@ class Reading extends React.Component {
     this.getArticleList(param)
   }
 
+  toggle = () => {
+    this.setState({
+      collapsed: !this.state.collapsed,
+    });
+  }
+
   render() {
-    const {data,date,currentId,Comment,loading} = this.state;
+    const {data,articleDetail,currentId,Comment,loading,collapsed} = this.state;
     return (
-      [<div className="article-container" style={{flex:1,display: "flex",
+      [!collapsed?<div className="article-container" style={{flex:1,display: "flex",
         flexDirection: "column"}} key="1">
         <div className="title-search">
           <Search 
@@ -83,20 +90,27 @@ class Reading extends React.Component {
               <List.Item onClick={this.onHandleItem.bind(null,item._id)} style={item._id === currentId?{background:"#f1ededc7"}:{background:"#fff"}}>
                 <List.Item.Meta
                   title={<span>{item.articleName}</span>}
-                  description={`时间：${date}`}
+                  description={`时间：${item.articleDate}`}
                 />
               </List.Item>
             )}
           />
 
         </div>
-      </div>,
-      <div className="content-container" key="2">
+      </div>:null,
+      <div className="content-container" key="2" style={collapsed?{maxWidth:"100%"}:{}}>
           <div className="publish-date">
-              发布于：{date}
+            <Icon
+              className="trigger"
+              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+              onClick={this.toggle}
+              style={{paddingLeft:0}}
+            />
+              发布于：{articleDetail.articleDate}
           </div>
-          <div className="publish-detail">
+          <div className="publish-detail" style={collapsed?{paddingLeft: "20%",paddingRight: "20%"}:{}}>
             <Spin spinning={loading}>
+              <h2 style={{textAlign:"center"}}>{articleDetail.articleName}</h2>
               <div id="content"></div>
             </Spin> 
           </div>

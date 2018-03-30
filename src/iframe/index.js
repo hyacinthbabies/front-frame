@@ -15,8 +15,8 @@ class Index extends React.Component{
         <nav className="main-nav">
             <ul>
                 <li><Link to="/home">主页</Link></li>
-                <li><Link to="/article/reading">文档</Link></li>
-                <li><Link to="/life">阅读</Link></li>
+                <li><Link to="/article/reading">分享</Link></li>
+                <li><Link to="/life">未知空间</Link></li>
                 <li><Link to="/about">关于我</Link></li>
                 <li><Link to="/login">管理入口</Link></li>
             </ul>

@@ -61,7 +61,7 @@ class ArticleList extends React.Component{
     
     getArticleList = ()=>{
       let param = {
-        articleType:"SKILL_ID",
+        articleType:"",
         keyword:""
       }
       //查询列表
@@ -83,7 +83,7 @@ class ArticleList extends React.Component{
     deleteArticle = id=>{
       ApiUtil({articleId:id},"/api/removeArticle")
       .then(res=>{
-        this.getArticleList();
+        // this.getArticleList();
         message.success("删除成功");
       });
     }

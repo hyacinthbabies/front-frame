@@ -43,7 +43,7 @@ class Index extends React.Component{
         onChange: (() => {}),
       };
         return <Layout className="layout">
-        <Header>
+        {/* <Header>
           <div className="logo" />
           <Menu
             theme="dark"
@@ -73,7 +73,7 @@ class Index extends React.Component{
                     <List.Item.Meta
                     // avatar={<Avatar src={item.avatar} />}
                     title={<a>{item.articleName}</a>}
-                    description={item.articleContent.substr(0,30)}
+                    // description={item.articleContent.substr(0,30)}
                     />
                     {item.articleContent}
                 </List.Item>
@@ -81,7 +81,7 @@ class Index extends React.Component{
             />
 
           </div>
-        </Content>
+        </Content> */}
         <Footer style={{ textAlign: 'center' }}>
           博客 ©2018 songhuaqian
         </Footer>

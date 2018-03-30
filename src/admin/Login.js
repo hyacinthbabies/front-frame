@@ -4,17 +4,16 @@ const FormItem = Form.Item;
 
 class Login extends React.Component {
   handleSubmit = (e) => {
-    e.preventDefault();
-    this.props.history.push("/admin/articleAdd");        
-    
-    // this.props.form.validateFields((err, values) => {
-    //   if (!err) {
-    //     if(values["userName"] === "song" && values["password"] === "1"){
-    //     }else{
-    //       message.error("用户名或者密码错误")
-    //     }
-    //   }
-    // });
+    e.preventDefault();       
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        if(values["userName"] === "song" && values["password"] === "qian"){
+          this.props.history.push("/admin/articleAdd");
+        }else{
+          message.error("用户名或者密码错误")
+        }
+      }
+    });
   }
   render() {
     const { getFieldDecorator } = this.props.form;    
