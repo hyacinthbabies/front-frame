@@ -92,6 +92,11 @@ module.exports = {
       "process.env.NODE_ENV": JSON.stringify(env)
     }),
     // last css
-    new ExtractTextPlugin("./bundle.[hash].css")
+    new ExtractTextPlugin("./bundle.[hash].css"),
+    new webpack.optimize.UglifyJsPlugin({
+      compress:{
+        warnings:false
+      }
+    })
   ]
 };

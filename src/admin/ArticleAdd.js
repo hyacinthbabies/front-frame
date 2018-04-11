@@ -3,6 +3,7 @@ import WangEditor from "./wangEditor"
 import axios from "axios";
 import ApiUtil from "utils/ApiUtil";
 import {Form,Icon, Input, Button,message,Select} from "antd"
+import { withRouter } from 'react-router'
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -164,4 +165,4 @@ class ArticleAdd extends React.Component{
     }
 }
 
-export default Form.create()(ArticleAdd);
+export default Form.create()(withRouter(ArticleAdd));

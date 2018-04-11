@@ -1,5 +1,6 @@
 import React from "react"
 import {Form,Icon, Input, Button, Checkbox,message } from "antd"
+import { withRouter } from 'react-router'
 const FormItem = Form.Item;
 
 class Login extends React.Component {
@@ -52,4 +53,4 @@ class Login extends React.Component {
     );
   }
 }
-export default Form.create()(Login);
+export default Form.create()(withRouter(Login));

@@ -2,6 +2,7 @@ import React from "react"
 import {Input,List, Avatar,Spin,Icon} from "antd";
 import ApiUtil from "utils/ApiUtil";
 import "./style.less";
+import { withRouter } from 'react-router'
 const Search = Input.Search;
 
 class Reading extends React.Component {
@@ -119,4 +120,4 @@ class Reading extends React.Component {
     );
   }
 }
-export default Reading;
+export default withRouter(Reading);

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import Routes from "./Routes";
-
+import "style/style.less";
 //设置环境
 // (window as any).__DEV__ = Constant.dev;
 class Index extends React.Component {

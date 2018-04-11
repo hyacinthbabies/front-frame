@@ -7,16 +7,72 @@ import {
     Redirect
 } from 'react-router-dom'
 import Home from "./iframe/Home";
-import Indexs from "./iframe";
-import Reading from "./article/Reading";
-import Login from "./admin/Login";
+import Indexs from "bundle-loader?lazy!./iframe";
+import Reading from "bundle-loader?lazy!./article/Reading";
+import Login from "bundle-loader?lazy!./admin/Login";
 import AdminHome from "./admin";
-import ArticleAdd from "./admin/ArticleAdd";
-import ArticleList from "./admin/ArticleList";
-import ArticleDetail from "./admin/ArticleDetail";
-import UserList from "./admin/userList";
-import About from "./about";
-import HomePage from "./home";
+import ArticleAdd from "bundle-loader?lazy!./admin/ArticleAdd";
+import ArticleList from "bundle-loader?lazy!./admin/ArticleList";
+import ArticleDetail from "bundle-loader?lazy!./admin/ArticleDetail";
+import UserList from "bundle-loader?lazy!./admin/userList";
+import About from "bundle-loader?lazy!./about";
+import HomePage from "bundle-loader?lazy!./home";
+import Bundle from './bundle.js';
+
+const BlogIndexs = () => (
+	<Bundle load={Indexs}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogReading = () => (
+	<Bundle load={Reading}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+
+const BlogUserList = () => (
+	<Bundle load={UserList}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogAbout = () => (
+	<Bundle load={About}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogHomePage = () => (
+	<Bundle load={HomePage}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogArticleAdd = ()=>(
+  <Bundle load={ArticleAdd}>
+    {(List) => <List/>}
+  </Bundle>
+)
+
+const BlogArticleList = ()=>(
+  <Bundle load={ArticleList}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogArticleDetail = ()=>(
+  <Bundle load={ArticleDetail}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogLogin = ()=>(
+  <Bundle load={Login}>
+		{(List) => <List/>}
+	</Bundle>
+)
 // 第一种搭配Router使用<Router history={history}/>
 // import createBrowserHistory from 'history/createBrowserHistory'
 // const history = createBrowserHistory()
@@ -51,17 +107,17 @@ const BasicExample = () => (
   <Router>
     {/* 用了Switch 这里每次只匹配一个路由，所有只有一个节点 */}
     <Switch>
-      <Route exact path="/" component={Indexs}/>
-      <Route path="/login" component={Login}/>
-      <Route path="/about" component={About}/>
-      <Route path="/home" component={HomePage}/>
+      <Route exact path="/" component={BlogIndexs}/>
+      <Route path="/login" component={BlogLogin}/>
+      <Route path="/about" component={BlogAbout}/>
+      <Route path="/home" component={BlogHomePage}/>
       {/* 管理系统 */}
       <PrivateRoute path="/admin" component={props=>(
           <AdminHome {...props}>
-              <PrivateRoute path="/admin/articleAdd" component={ArticleAdd}/>   
-              <PrivateRoute path="/admin/articleList" component={ArticleList}/> 
-              <PrivateRoute path="/admin/articleDetail/:id" component={ArticleDetail}/> 
-              <PrivateRoute path="/admin/userList" component={UserList}/>                 
+              <PrivateRoute path="/admin/articleAdd" component={BlogArticleAdd}/>   
+              <PrivateRoute path="/admin/articleList" component={BlogArticleList}/> 
+              <PrivateRoute path="/admin/articleDetail/:id" component={BlogArticleDetail}/> 
+              <PrivateRoute path="/admin/userList" component={BlogUserList}/>                 
           </AdminHome>
       )} />  
       {/* 阅读 */}
@@ -69,18 +125,15 @@ const BasicExample = () => (
         path="/article"
         component={props =>(
           <Home {...props}>
-            <Route path="/article/skill" component={Reading}/>
-            <Route path="/article/reading" component={Reading}/>
-            <Route path="/article/article" component={Reading}/>
-            <Route path="/article/life" component={Reading}/>
-            <Route path="/article/travel" component={Reading}/>
+            <Route path="/article/skill" component={BlogReading}/>
+            <Route path="/article/reading" component={BlogReading}/>
+            <Route path="/article/article" component={BlogReading}/>
+            <Route path="/article/life" component={BlogReading}/>
+            <Route path="/article/travel" component={BlogReading}/>
             {/* <Route path="/article/life" component={Login}/> */}
           </Home>
         )}
       />
-
-
-      
     </Switch>
   </Router>
 )

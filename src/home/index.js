@@ -1,6 +1,6 @@
 import React from "react"
 import { Layout, Menu, Breadcrumb,List, Avatar, Icon } from 'antd'
-import ApiUtil from "utils/ApiUtil"
+import ApiUtil from "utils/ApiUtil";
 const { Header, Content, Footer } = Layout;
 
 const IconText = ({ type, text }) => (

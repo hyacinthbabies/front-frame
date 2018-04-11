@@ -1,6 +1,5 @@
 import React from "react";
 import { Timeline,Card,Icon,Avatar,Row,Col } from "antd";
-import "style/main.css";
 import Newtouch from "../web_modules/images/newtouch.png";
 import Step from "images/step.png";
 import Home from "images/app.png";

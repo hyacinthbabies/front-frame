@@ -1,6 +1,7 @@
 import React from "react"
 import {Input,List, Avatar,Spin} from "antd";
 import ApiUtil from "utils/ApiUtil";
+import { withRouter } from 'react-router'
 const Search = Input.Search;
 
 class ArticleDetail extends React.Component {
@@ -44,4 +45,4 @@ class ArticleDetail extends React.Component {
     );
   }
 }
-export default ArticleDetail;
+export default withRouter(ArticleDetail);

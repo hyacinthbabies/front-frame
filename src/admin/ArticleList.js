@@ -1,7 +1,7 @@
 import React from "react"
 import {Table,Divider,message} from "antd"
 import ApiUtil from "utils/ApiUtil"
-
+import { withRouter } from 'react-router'
   
 class ArticleList extends React.Component{
   constructor(props){
@@ -103,4 +103,4 @@ class ArticleList extends React.Component{
     }
 }
 
-export default ArticleList;
+export default withRouter(ArticleList);

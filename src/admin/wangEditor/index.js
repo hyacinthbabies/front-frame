@@ -40,7 +40,7 @@ class WangEditor extends React.Component {
     editor.config.uploadImgFileName = "pic";
     //表情配置
     editor.config.emotions = {
-      default: {
+      'default': {
         title: "微博表情", // 组名称
         data: emotion
       }

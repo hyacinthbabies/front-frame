@@ -1,12 +1,11 @@
 import React from "react"
 import { Layout, Menu, Icon ,Input,Card,Avatar} from 'antd';
 import {Link} from "react-router-dom";
-import "./style.less";
 import Audio from "images/bigFish.mp3";
 import ApiUtil from "utils/ApiUtil";
 import {getValueById} from "utils/dataUtils";
 import HomeImg from "images/hyacinth.jpg";
-console.log(getValueById,"dataUtils")
+import { withRouter } from 'react-router'
 const { Header, Sider, Content } = Layout;
 const Search = Input.Search;
 const { Meta } = Card;
@@ -135,4 +134,4 @@ class SiderDemo extends React.Component {
     );
   }
 }
-export default SiderDemo;
+export default withRouter(SiderDemo);
