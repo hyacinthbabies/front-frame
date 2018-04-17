@@ -9,6 +9,7 @@ import {
 import Home from "./iframe/Home";
 import Indexs from "bundle-loader?lazy!./iframe";
 import Reading from "bundle-loader?lazy!./article/Reading";
+import Life from "bundle-loader?lazy!./article/Life";
 import Login from "bundle-loader?lazy!./admin/Login";
 import AdminHome from "./admin";
 import ArticleAdd from "bundle-loader?lazy!./admin/ArticleAdd";
@@ -27,6 +28,12 @@ const BlogIndexs = () => (
 
 const BlogReading = () => (
 	<Bundle load={Reading}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogLife = () => (
+	<Bundle load={Life}>
 		{(List) => <List/>}
 	</Bundle>
 )
@@ -128,7 +135,7 @@ const BasicExample = () => (
             <Route path="/article/skill" component={BlogReading}/>
             <Route path="/article/reading" component={BlogReading}/>
             <Route path="/article/article" component={BlogReading}/>
-            <Route path="/article/life" component={BlogReading}/>
+            <Route path="/article/life" component={BlogLife}/>
             <Route path="/article/travel" component={BlogReading}/>
             {/* <Route path="/article/life" component={Login}/> */}
           </Home>

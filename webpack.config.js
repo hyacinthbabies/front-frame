@@ -12,8 +12,9 @@ module.exports = {
   entry: "./src/index.js",
   output: {
     path: path.resolve(__dirname, "./dist/" + version),
-    filename: "bundle.[hash].js",
+    filename: "[name].js",
     publicPath,
+    chunkFilename: '[name]-[id].[chunkhash:8].bundle.js'
     //需要上传的目录
     // uploadPath: path.resolve(__dirname + "./dist/")
   },
@@ -80,7 +81,7 @@ module.exports = {
       }
     },
     new HtmlWebpackPlugin({
-      title: "前端框架",
+      title: "个人小站",
       filename: "../index.html",
       template: path.resolve(__dirname, "./entry/index.ejs"),
       favicon: "./hyacinth.ico"
@@ -90,6 +91,14 @@ module.exports = {
     }),
     new webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify(env)
+    }),
+        // 拆分依赖包JS到自己的文件
+		new webpack.optimize.CommonsChunkPlugin({
+			name: 'vendor',
+			minChunks: function(module, count) {
+				// node_modules内的任何必需模块都将提取给依赖包
+				return (module.resource && /\.js$/.test(module.resource) && module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0)
+			}
     }),
     // last css
     new ExtractTextPlugin("./bundle.[hash].css"),

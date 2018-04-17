@@ -6,6 +6,7 @@ import ApiUtil from "utils/ApiUtil";
 import {getValueById} from "utils/dataUtils";
 import HomeImg from "images/hyacinth.jpg";
 import { withRouter } from 'react-router'
+import {getMenuKeys} from "common/menuUtils";
 const { Header, Sider, Content } = Layout;
 const Search = Input.Search;
 const { Meta } = Card;
@@ -15,6 +16,15 @@ class SiderDemo extends React.Component {
     currentKey:"1",
     countList:[]
   };
+
+  componentWillMount() {
+    let menuItem = getMenuKeys();
+    if(menuItem){
+      this.setState({
+        currentKey: menuItem.key
+      });
+    }
+  }
 
   componentDidMount(){
     this.getCount();

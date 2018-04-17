@@ -19,6 +19,24 @@ class Index extends React.Component{
     .then(res=>{
       this.setState({listData:res});
     });
+    let wookmark;
+
+    // Init lightbox
+    $('#container').magnificPopup({
+        delegate: 'li:not(.inactive) a',
+        type: 'image',
+        gallery: {
+            enabled: true
+        }
+    });
+
+    // Call the layout function after all images have loaded
+    imagesLoaded('#container', function () {
+        wookmark = new Wookmark('#container', {
+            offset: 2, // Optional, the distance between grid items
+            itemWidth: 210 // Optional, the width of a grid item
+        });
+    });
   }
 
     /**
@@ -42,46 +60,17 @@ class Index extends React.Component{
         total: listData.length,
         onChange: (() => {}),
       };
-        return <Layout className="layout">
-        {/* <Header>
-          <div className="logo" />
-          <Menu
-            theme="dark"
-            mode="horizontal"
-            defaultSelectedKeys={['2']}
-            style={{ lineHeight: '64px' }}
-            onClick={this.onClickMenu}
-          >
-            <Menu.Item key="1">文档</Menu.Item>
-            <Menu.Item key="2">阅读</Menu.Item>
-            <Menu.Item key="3">关于</Menu.Item>
-          </Menu>
-        </Header>
-        <Content style={{ padding: '50px' }}>
-          <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
-            <List
-                itemLayout="vertical"
-                size="large"
-                pagination={pagination}
-                dataSource={listData}
-                renderItem={item => (
-                <List.Item
-                    key={item.articleName}
-                    actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
-                    extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
-                >
-                    <List.Item.Meta
-                    // avatar={<Avatar src={item.avatar} />}
-                    title={<a>{item.articleName}</a>}
-                    // description={item.articleContent.substr(0,30)}
-                    />
-                    {item.articleContent}
-                </List.Item>
-                )}
-            />
-
+        return <Layout className="layout photo_container">
+          <div role="main">
+            <ul id="container" className="tiles-wrap animated">
+              <li>
+                <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
+                  <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
+                </a>
+                <p>1</p>
+              </li>
+            </ul>
           </div>
-        </Content> */}
         <Footer style={{ textAlign: 'center' }}>
           博客 ©2018 songhuaqian
         </Footer>

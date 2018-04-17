@@ -101,7 +101,7 @@ module.exports = {
 				// node_modules内的任何必需模块都将提取给依赖包
 				return (module.resource && /\.js$/.test(module.resource) && module.resource.indexOf(path.join(__dirname, '../node_modules')) === 0)
 			}
-		}),
+    }),
     new HtmlWebpackPlugin({
       title: "个人小站",
       template: path.resolve(__dirname, "./entry/index.ejs"),

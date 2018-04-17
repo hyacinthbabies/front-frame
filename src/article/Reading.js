@@ -3,6 +3,7 @@ import {Input,List, Avatar,Spin,Icon} from "antd";
 import ApiUtil from "utils/ApiUtil";
 import "./style.less";
 import { withRouter } from 'react-router'
+import {getMenuKeys} from "common/menuUtils";
 const Search = Input.Search;
 
 class Reading extends React.Component {
@@ -10,17 +11,23 @@ class Reading extends React.Component {
     articleDetail:"",
     data:[],
     currentId:"",
-    loading:false,
-    collapsed:false
+    detailLoading:false,
+    listLoading:false,
+    collapsed:false,
   }
   componentDidMount(){
     const {state} = this.props.location;
-    
     //如果从首页入口进去，则默认查询技术类文档
     let param = {
       articleType:"SKILL_ID",
       keyword:""
     }
+    //刷新浏览器
+    let menuItem = getMenuKeys();
+    if(menuItem){
+      param.articleType = menuItem.id;
+    }
+    
     if(state && state.id){
       param.articleType = state.id;
     }
@@ -28,24 +35,25 @@ class Reading extends React.Component {
   }
 
   getArticleList = (param)=>{
+    this.setState({listLoading:true})
     //查询列表
     ApiUtil(param,"/api/content/list")
     .then(res=>{
       if(res.length > 0 ){
         this.onHandleItem(res[0]._id);
       }
-      this.setState({data:res});
+      this.setState({data:res,listLoading:false});
     })
   }
 
   //查询详情
   onHandleItem = id =>{
-    this.setState({currentId:id,loading:true});
+    this.setState({currentId:id,detailLoading:true});
       ApiUtil({},`/api/queryContent/${id}`)
       .then(res=>{
         this.setState({articleDetail:res,Comment});
         $("#content").html(res.articleContent); 
-        this.setState({loading:false}) 
+        this.setState({detailLoading:false}) 
       })
   }
 
@@ -71,7 +79,7 @@ class Reading extends React.Component {
   }
 
   render() {
-    const {data,articleDetail,currentId,Comment,loading,collapsed} = this.state;
+    const {data,articleDetail,currentId,Comment,listLoading,detailLoading,collapsed} = this.state;
     return (
       [!collapsed?<div className="article-container" style={{flex:1,display: "flex",
         flexDirection: "column"}} key="1">
@@ -83,7 +91,7 @@ class Reading extends React.Component {
         <div className="article-list">
           <List
             className="demo-loadmore-list"
-            // loading={loading}
+            loading={listLoading}
             itemLayout="horizontal"
             // loadMore={loadMore}
             dataSource={data}
@@ -110,13 +118,14 @@ class Reading extends React.Component {
               发布于：{articleDetail.articleDate}
           </div>
           <div className="publish-detail" style={collapsed?{paddingLeft: "20%",paddingRight: "20%"}:{}}>
-            <Spin spinning={loading}>
+            <Spin spinning={detailLoading}>
               <h2 style={{textAlign:"center"}}>{articleDetail.articleName}</h2>
               <div id="content"></div>
             </Spin> 
           </div>
           
-      </div>]
+      </div>,
+      ]
     );
   }
 }
