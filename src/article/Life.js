@@ -4,21 +4,40 @@ import ApiUtil from "utils/ApiUtil";
 import "./style.less";
 import { withRouter } from 'react-router'
 import {getMenuKeys} from "common/menuUtils";
-
+import BASE_URl from "config";
+console.log(BASE_URl)
 const Search = Input.Search;
 
 class Reading extends React.Component {
   state = {
+    dataList:[]
   }
 
   componentDidMount(){
+    this.getPicList();
+  }
+
+  getPicList = filter =>{
+    let param = {
+      tag:"",
+    }
+    //查询列表
+    ApiUtil(param,"/api/getPhotoList")
+    .then(res=>{
+      this.setState({dataList:res},()=>{
+        this.initPic();
+      });
+    })
+  }
+
+  initPic = ()=>{
     // let loadedImages = 0, // Counter for loaded images
-          // $progressBar = $('.progress-bar'),
-          // tileCount = 30,
-     let   $container = $("#container"),
-     $window = $(window),
-     $document = $(document),  
-     wookmark;
+    // $progressBar = $('.progress-bar'),
+    // tileCount = 30,
+    let   $container = $("#container"),
+    $window = $(window),
+    $document = $(document),  
+    wookmark;
 
     // for (let i = 0; i < tileCount; i++) {
     //   let newItemHtml = '<li class="tile-loading"><img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg"><p>' + (1 + i) + '</p></li>';
@@ -54,8 +73,8 @@ class Reading extends React.Component {
     //     });
 
     /**
-     * When scrolled all the way to the bottom, add more tiles
-     */
+    * When scrolled all the way to the bottom, add more tiles
+    */
     function onScroll() {
       // Check if we're within 100 pixels of the bottom edge of the broser window.
       var winHeight = window.innerHeight ? window.innerHeight : $window.height(), // iphone fix
@@ -84,8 +103,8 @@ class Reading extends React.Component {
     let $filters = $('#filters li');
 
     /**
-     * When a filter is clicked, toggle it's active state and refresh.
-     */
+    * When a filter is clicked, toggle it's active state and refresh.
+    */
     function onClickFilter(e) {
       var $item = $(e.currentTarget),
           activeFilters = [],
@@ -110,111 +129,28 @@ class Reading extends React.Component {
   }
 
   render() {
+    const {dataList} = this.state;
     return (
         <div role="main" className="photo_container">
         <ol id="filters">
-          <li data-filter="all">Reset filters</li>
-          <li data-filter="amsterdam">Amsterdam</li>
-          <li data-filter="tokyo">Tokyo</li>
-          <li data-filter="london">London</li>
-          <li data-filter="paris">Paris</li>
-          <li data-filter="berlin">Berlin</li>
-          <li data-filter="sport">Sport</li>
-          <li data-filter="fashion">Fashion</li>
-          <li data-filter="video">Video</li>
-          <li data-filter="art">Art</li>
+          <li data-filter="all">全部</li>
         </ol>
           <ul id="container" className="tiles-wrap animated">
-            <li data-filter-class='["london", "art"]'>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li data-filter-class='["london", "art"]'>
-              <a href={require("images/nrb.png")}>
-                <img src={require("images/nrb.png")} width="100" height="300"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li data-filter-class='["berlin", "art"]'>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href={require("images/nrb.png")}>
-                <img src={require("images/nrb.png")} width="100" height="300"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href={require("images/full/1.jpg")}>
-                <img src={require("images/full/1.jpg")} width="150" height="183"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>我试试少时诵诗书所所所所所所所所所所所少时诵诗书所所所所所所 少时诵诗书所</p>
-            </li>
-            <li>
-              <a href={require("images/nrb.png")}>
-                <img src={require("images/nrb.png")} width="200" height="283"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href={require("images/full/1.jpg")}>
-                <img src={require("images/full/1.jpg")} width="150" height="183"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>我试试少时诵诗书所所所所所所所所所所所少时诵诗书所所所所所所 少时诵诗书所</p>
-            </li>
-            <li>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href={require("images/full/1.jpg")}>
-                <img src={require("images/full/1.jpg")} width="150" height="183"/>
-              </a>
-              <p>1</p>
-            </li>
-            <li>
-              <a href="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg">
-                <img src="http://imgsrc.baidu.com/image/c0%3Dshijue1%2C0%2C0%2C294%2C40/sign=e5127fe0db09b3deffb2ec2ba4d606f4/9d82d158ccbf6c813356f460b63eb13532fa40d1.jpg" width="200" height="283"/>
-              </a>
-              <p>我试试少时诵诗书所所所所所所所所所所所少时诵诗书所所所所所所 少时诵诗书所</p>
-            </li>
+          {
+            dataList.map((list,index)=>{
+              return <li key={index}>
+                <a href={BASE_URl+"/avatar/"+list.photoName}>
+                  <img src={BASE_URl+"/avatar/"+list.photoName} width="100" height="300"/>
+                </a>
+                <div className="photo_desciption">
+                  {/* <span>{list.photoDate}</span> */}
+                  <p>{list.location}</p>
+                  <span>{list.photoDesciption}</span>
+                </div>
+              </li>
+            })
+          }
+
           </ul>
       </div>
     );

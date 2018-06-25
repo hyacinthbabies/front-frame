@@ -1,5 +1,7 @@
 import React from "react"
 import {Table, Input, Popconfirm,Divider } from "antd"
+import env from "config";
+import ApiUtil from "utils/ApiUtil";
 const data = [];
 for (let i = 0; i < 100; i++) {
   data.push({
@@ -62,6 +64,10 @@ class userList extends React.Component{
         }];
         this.state = { data,selectedRowKeys:[] };
         this.cacheData = data.map(item => ({ ...item }));
+    }
+
+    componentDidMount(){
+        this.init();
     }
 
     /**

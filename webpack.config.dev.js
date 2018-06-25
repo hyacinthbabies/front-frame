@@ -80,9 +80,18 @@ module.exports = {
     hot: true,
     proxy: [{
         context: ["/file", "/api"],
-        target: "http://hyacinthbaby.com",
-        // target: "http://127.0.0.1:3000"
+        // target: "http://hyacinthbaby.com",
+        target: "http://127.0.0.1:3000"
     }]
+    // proxy:{
+    //   '/address':{
+    //       target: 'http://139.224.130.64:8383',
+    //       changeOrigin: true,
+    //       // pathRewrite: {
+    //       //   '^/address': '/address'
+    //       // }
+    //   }
+    // }
   },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),

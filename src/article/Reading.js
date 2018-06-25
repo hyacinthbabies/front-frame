@@ -1,12 +1,29 @@
 import React from "react"
-import {Input,List, Avatar,Spin,Icon} from "antd";
+import {Input,List, Avatar,Spin,Icon,Tag} from "antd";
 import ApiUtil from "utils/ApiUtil";
 import "./style.less";
 import { withRouter } from 'react-router'
 import {getMenuKeys} from "common/menuUtils";
+import Constant from "common/Constant"
 const Search = Input.Search;
+const IconText = ({ type, text }) => (
+  <span>
+    <Icon type={type} style={{ marginRight: 8 }} />
+    {text}
+  </span>
+);
 
 class Reading extends React.Component {
+  constructor(props){
+    super(props);
+    this.tagColorList = {
+      "react":"magenta",
+      "webpack":"volcano",
+      "vue":"blue",
+      "html":"purple"
+    }
+  }
+
   state = {
     articleDetail:"",
     data:[],
@@ -80,8 +97,9 @@ class Reading extends React.Component {
 
   render() {
     const {data,articleDetail,currentId,Comment,listLoading,detailLoading,collapsed} = this.state;
+    console.log(Constant.typeList);
     return (
-      [!collapsed?<div className="article-container" style={{flex:1,display: "flex",
+      [!collapsed?<div className="article-container" style={{flex:1,display: "flex",background:"#fff",
         flexDirection: "column"}} key="1">
         <div className="title-search">
           <Search 
@@ -98,8 +116,22 @@ class Reading extends React.Component {
             renderItem={item => (
               <List.Item onClick={this.onHandleItem.bind(null,item._id)} style={item._id === currentId?{background:"#f1ededc7"}:{background:"#fff"}}>
                 <List.Item.Meta
-                  title={<span>{item.articleName}</span>}
-                  description={`时间：${item.articleDate}`}
+                  title={
+                    <span>
+                      {item.articleName}
+                    </span>}
+                  description={
+                    <div>
+                      <div><IconText type="clock-circle-o" text={item.articleDate} /></div>
+                      {
+                        item.tag &&item.tag.split(",").map(t=>{
+                          return <Tag color={this.tagColorList[t]}>
+                            {t}
+                          </Tag>
+                        })
+                      }
+                    </div>
+                  }
                 />
               </List.Item>
             )}
@@ -107,7 +139,7 @@ class Reading extends React.Component {
 
         </div>
       </div>:null,
-      <div className="content-container" key="2" style={collapsed?{maxWidth:"100%"}:{}}>
+      <div className="content-container" key="2" style={collapsed?{maxWidth:"100%",background:"#fff"}:{background:"#fff"}}>
           <div className="publish-date">
             <Icon
               className="trigger"

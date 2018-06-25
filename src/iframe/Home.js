@@ -1,5 +1,5 @@
 import React from "react"
-import { Layout, Menu, Icon ,Input,Card,Avatar} from 'antd';
+import { Layout, Menu, Icon ,Input,Card,Avatar,BackTop} from 'antd';
 import {Link} from "react-router-dom";
 import Audio from "images/bigFish.mp3";
 import ApiUtil from "utils/ApiUtil";
@@ -82,6 +82,7 @@ class SiderDemo extends React.Component {
         <Sider
           trigger={null}
           collapsible
+          // style={{ background: '#fff' }}
           // collapsed={this.state.collapsed}
         >
           <div className="article-iframe-header">
@@ -124,21 +125,11 @@ class SiderDemo extends React.Component {
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }}>
-            {/* <Icon
-              className="trigger"
-              type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-              onClick={this.toggle}
-            /> */}
-            <audio ref={ref=>this.audio= ref} preload="auto" controls style={{position: "absolute",top: 18,marginLeft:20}}>
-              <source src={Audio}/>
-              {/* <!-- <source src="audio/BlueDucks_FourFlossFiveSix.ogg">
-              <source src="audio/BlueDucks_FourFlossFiveSix.wav"> --> */}
-              </audio>
-          </Header>
-          <Content style={{ margin: '24px 16px', display:"flex", background: '#fff', minHeight: 280 }}>
+          
+          <Content style={{ margin: '24px 16px', display:"flex" }}>
               {this.props.children}
           </Content>
+          <BackTop />
         </Layout>
       </Layout>
     );

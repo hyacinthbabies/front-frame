@@ -4,6 +4,7 @@ import axios from "axios";
 import ApiUtil from "utils/ApiUtil";
 import {Form,Icon, Input, Button,message,Select} from "antd"
 import { withRouter } from 'react-router'
+import AddTagModal from "./tagModal";
 const FormItem = Form.Item;
 const Option = Select.Option;
 
@@ -15,6 +16,8 @@ const Option = Select.Option;
 class ArticleAdd extends React.Component{
     state = {
         loading:false,
+        modalVisible:false,
+        tagNames:"",//标签名称
         isEdit:false//是否处于编辑状态
     }
 
@@ -60,7 +63,8 @@ class ArticleAdd extends React.Component{
                 articleContent:values["editor"],
                 authorName:values["author"],
                 articleType:values["type"],
-                articleDate:new Date()
+                articleDate:new Date(),
+                tag:this.state.tagNames
             }
             if(this.state.isEdit){
                 const {state} = this.props.location;
@@ -100,8 +104,30 @@ class ArticleAdd extends React.Component{
         })
     }
 
+    openTagModal = ()=>{
+        this.setState({modalVisible:true})
+    }
+
+    onCancelModal= ()=>{
+        this.setState({modalVisible:false})
+    }
+
+    submitAddTag = values =>{
+        this.onCancelModal();
+        const {tagNames} = this.state;
+        let newTags = [];
+        if(tagNames !== ""){
+            newTags = tagNames.split(",").concat(values);            
+        }else{
+            newTags = values;
+        }
+        this.setState({
+            tagNames:newTags.join(",")
+        })
+    }
+
     render(){
-        const {isEdit} = this.state;
+        const {isEdit,modalVisible,tagNames} = this.state;
         const { getFieldDecorator } = this.props.form; 
         const formItemLayout = {
             labelCol: {
@@ -155,11 +181,30 @@ class ArticleAdd extends React.Component{
                         )
                     }
                 </FormItem>
+                <FormItem
+                {...formItemLayout}
+                label="标签"
+                >
+                    {
+                        getFieldDecorator('tags')(
+                            <div>
+                                <div>{tagNames}</div>
+                                <Button type="primary" onClick={this.openTagModal}>添加标签</Button>
+                            </div>
+                        )
+                    }
+                </FormItem>
                 <FormItem>
                     <Button type="primary" htmlType="submit" >
                         {isEdit?"修改":"添加"}
                     </Button>
                 </FormItem>
+                {modalVisible && <AddTagModal
+                    title={"标签"}
+                    onSubmit={this.submitAddTag}
+                    onCancel={this.onCancelModal}
+                />
+                }
             </Form>
         </div>
     }

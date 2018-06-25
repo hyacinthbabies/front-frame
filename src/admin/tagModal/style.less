@@ -1,0 +1,157 @@
+.plant-card-header{
+    padding: 17px;
+    border-bottom:1px solid rgba(30,48,84,0.10);    
+}
+
+.plant-card-header{
+    .header-top{
+        margin-bottom: 32px;
+        .title{
+            font-size:16px;
+            color:#1e3054;
+            line-height:16px;
+        }
+        .count{
+            font-size:12px;
+            color:rgba(30,48,84,0.20);
+            letter-spacing:0;
+            text-align:justify;
+            margin-left: 16px;
+        }
+        .add-icon{
+            float: right;
+        }
+    } 
+    input::-webkit-input-placeholder{
+        color:rgba(30,48,84,0.20);
+    }
+    input::-moz-placeholder{
+        color:rgba(30,48,84,0.20);
+    }
+    input::-ms-input-placeholder{
+        color:rgba(30,48,84,0.20);
+    }
+}
+
+.plant-card-content{
+    padding: 16px 2px 13px 17px;
+    .content-scroll{
+        height: 337px;//372
+        overflow-y: auto;
+    }
+    .item{
+        padding-bottom: 16px;
+        font-size:14px;
+        color:rgba(30,48,84,0.80);
+        cursor: pointer;
+        padding-right: 18px;
+        // color:#528bfe;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+//新建弹出框
+.add-crop-modal{
+     top: 185px;
+    .ant-modal-content{
+        padding:0 16px;
+        .ant-modal-body{
+            padding-top:0;
+        }
+        .ant-modal-header{
+            padding-top: 24px;
+            padding-bottom: 29px;
+            font-size:16px;
+            color:#1e3054;
+            border-bottom: none !important;
+        }
+        .ant-modal-close{
+            right: 32px;
+            top: 26px;
+        }
+        .ant-modal-footer{
+            padding-bottom: 28px;
+            border-top: none !important;
+        }
+    }
+    .ant-btn-primary{
+        background:#528BFE;
+        border-color:#528BFE;
+    }
+    
+}
+
+.add-crop-content{
+    .tip{
+        font-size:12px;
+        color:rgba(30,48,84,0.20);
+        padding-top: 13px;
+        display: block;;
+    }
+    .text-input{
+        width:100%;
+        min-height: 98px;
+        max-height: 224px;
+        overflow: auto;
+        border:1px solid rgba(30,48,84,0.10); 
+        padding: 16px;
+        position: relative;
+        .ant-input:focus{
+            outline: 0;
+            border: 0;
+            box-shadow: 0 0 0 0 rgba(65,129,217,0.1);
+        }
+        input{
+            outline: 0;
+            border: 0;
+            max-width: 100%;
+            padding: 0;
+            overflow: visible;
+            background: transparent;
+            
+        }
+        input::-webkit-input-placeholder{
+            color:rgba(30,48,84,0.20);
+        }
+        input::-moz-placeholder{
+            color:rgba(30,48,84,0.20);
+        }
+        input::-ms-input-placeholder{
+            color:rgba(30,48,84,0.20);
+        }
+        .input-mirror{
+            position: absolute;
+            top: 0;
+            left: -9999px;
+            white-space: pre;
+            pointer-events: none;
+        }
+        .text-input__placeholder{
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            color:rgba(30,48,84,0.20);
+            max-width: 100%;
+            height: 22px;
+            line-height: 22px;
+        }
+    }
+}
+
+//气泡弹窗
+.crop-card-pop{
+    .ant-popover-message-title{
+        font-size:12px;
+        color:rgba(30,48,84,0.40);
+    }
+    .ant-popover-buttons button:last-child{
+        background:#528BFE;
+        border-color:#528BFE;
+        padding: 5px 15px;
+    }
+    .ant-popover-buttons button:first-child{
+        padding: 5px 15px;
+    }
+}

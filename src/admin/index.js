@@ -39,7 +39,7 @@ class Index extends React.Component {
                 this.props.history.push("/admin/articleList");
                 break;
             case "3":
-                this.props.history.push("/admin/userList");
+                this.props.history.push("/admin/photoAdd");
                 break;
             default:
                 this.props.history.push("/admin/articleAdd");
@@ -67,9 +67,10 @@ class Index extends React.Component {
                 <SubMenu key="sub1" title={<span><Icon type="mail" /><span>文章设置</span></span>}>
                     <Menu.Item key="1">添加文章</Menu.Item>
                     <Menu.Item key="2">文章列表</Menu.Item>
+                    <Menu.Item key="3">添加图片</Menu.Item>
                 </SubMenu>
                 <SubMenu key="sub2" title={<span><Icon type="appstore" /><span>用户设置</span></span>}>
-                    <Menu.Item key="3">用户列表</Menu.Item>
+                    <Menu.Item key="4">用户列表</Menu.Item>
                 </SubMenu>
                 </Menu>
 
