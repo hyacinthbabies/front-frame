@@ -120,7 +120,7 @@ class Index extends React.Component{
                     <div className="card-content-hide">react、antd、webpack、loadsh</div>
               </Card>
             </div>
-            <div className="content-block" id="contact">
+            {/* <div className="content-block" id="contact">
                 <div className="overlay-3" style={{paddingBottom:10}}>
                     <div className="block-content text-center">
                         <div className="container" style={{display:"flex",justifyContent:"space-around",margin:"5% 30%"}}>
@@ -132,7 +132,7 @@ class Index extends React.Component{
                         <p className="text-center">@版权所有 hyacinth个人简历 2017</p>
                     </div>	
                 </div>	
-            </div>
+            </div> */}
         </div>
     }
 }

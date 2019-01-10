@@ -1,5 +1,5 @@
 import React from "react"
-import {Input,List, Avatar,Spin,Icon,Tag } from "antd";
+import {Input,List, Avatar,Skeleton,Icon,Tag } from "antd";
 import ApiUtil from "utils/ApiUtil";
 import "./style.less";
 import { withRouter } from 'react-router'
@@ -9,12 +9,6 @@ const env = "";
 class Skill extends React.Component {
   constructor(props){
     super(props);
-    this.tagColorList = {
-      "react":"magenta",
-      "webpack":"volcano",
-      "vue":"blue",
-      "html":"purple"
-    }
   }
 
   state = {
@@ -55,7 +49,7 @@ class Skill extends React.Component {
 
   //查询详情
   onHandleItem = id =>{
-    window.open(`/article/articleDetail/${id}`,"_blank");
+    this.props.history.push(`/home/article/articleDetail/${id}`);
   }
 
   //模糊搜索
@@ -97,36 +91,35 @@ class Skill extends React.Component {
             onChange: (page) => {
             console.log(page);
             },
-            pageSize: 3,
+            pageSize: 10,
         }}
-        style={{margin:"0 10%",padding:10,background:"#fff"}}
+        style={{margin:"0 5%",padding:10,background:"#fff",width:"100%"}}
         loading={listLoading}
         dataSource={data}
-        footer={<div><b>ant design</b> footer part</div>}
         renderItem={item => (
             <List.Item
             onClick={this.onHandleItem.bind(null,item._id)}
             key={item.title}
             actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
-            extra={<img width={272} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+            extra={<img width={100} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
             >
+            <Skeleton loading={listLoading} active>
             <List.Item.Meta
-                avatar={<Avatar src={item.avatar} />}
                 title={<a>{item.articleName}</a>}
                 description={
                     <div>
                         {
                         item.tag &&item.tag.split(",").map(t=>{
-                          return <Tag color={this.tagColorList[t]}>
+                          return <Tag color={Constant.tagColorList[t]}>
                             {t}
                           </Tag>
                         })
                       }
-                      <div>We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.</div>
                       <div><IconText type="clock-circle-o" text={item.articleDate} /></div>
                     </div>
                 }
             />
+            </Skeleton>
             {item.content}
             </List.Item>
         )}

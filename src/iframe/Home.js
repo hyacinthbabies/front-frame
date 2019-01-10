@@ -60,16 +60,16 @@ class SiderDemo extends React.Component {
     })
     switch(item.key){
         case "1":
-            this.props.history.push("/article/skill",{id:"SKILL_ID"});
+            this.props.history.push("/home/article/skill",{id:"SKILL_ID"});
             break;
         case "2":
-            this.props.history.push("/article/reading",{id:"BOOK_ID"});
+            this.props.history.push("/home/article/reading",{id:"BOOK_ID"});
             break;
         case "3":
-            this.props.history.push("/article/life",{id:"LIFE_ID"});
+            this.props.history.push("/home/article/life",{id:"LIFE_ID"});
             break; 
         case "4":
-            this.props.history.push("/article/travel",{id:"TRAVEL_ID"});
+            this.props.history.push("/home/article/travel",{id:"TRAVEL_ID"});
             break;  
         default:
           break;
@@ -82,7 +82,7 @@ class SiderDemo extends React.Component {
         <Sider
           trigger={null}
           collapsible
-          // style={{ background: '#fff' }}
+          style={{ height:"200px" }}
           // collapsed={this.state.collapsed}
         >
           <div className="article-iframe-header">
@@ -126,13 +126,13 @@ class SiderDemo extends React.Component {
         </Sider>
         <Layout>
           
-          <Content style={{ margin: '24px 16px', display:"flex" }}>
+          <Content style={{ margin: '0 16px', display:"flex" }}>
               {this.props.children}
           </Content>
-          <BackTop />
+         
         </Layout>
       </Layout>
     );
   }
 }
-export default withRouter(SiderDemo);
+export default SiderDemo;

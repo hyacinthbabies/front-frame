@@ -33,7 +33,7 @@ class ArticleDetail extends React.Component {
     const {data,date,currentId,Comment,loading} = this.state;
     
     return (
-      <div className="content-container" style={{boxShadow:"none",borderLeft:"none",background:"#fff",padding:20 }}>
+      <div className="content-container" style={{boxShadow:"none",borderLeft:"none",background:"#fff",padding:20,width:"100%",maxWidth:"100%" }}>
         <div className="">
           <Spin spinning={loading}>
             {/* 新闻详情 */}

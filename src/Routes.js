@@ -18,10 +18,13 @@ import ArticleList from "bundle-loader?lazy!./admin/ArticleList";
 import ArticleDetail from "bundle-loader?lazy!./admin/ArticleDetail";
 import UserList from "bundle-loader?lazy!./admin/userList";
 import About from "bundle-loader?lazy!./about";
-import HomePage from "bundle-loader?lazy!./home";
+import HomeIndex from "./home";
+import HomePage from "bundle-loader?lazy!./home/Home";
 import Bundle from './bundle.js';
 import Skill from "bundle-loader?lazy!./article/Skill";
 import Travel from "bundle-loader?lazy!./article/Travel";
+import VedioHome from "bundle-loader?lazy!./vedio"
+
 const BlogIndexs = () => (
 	<Bundle load={Indexs}>
 		{(List) => <List/>}
@@ -100,6 +103,12 @@ const BlogLogin = ()=>(
 		{(List) => <List/>}
 	</Bundle>
 )
+
+const BlogVedioHome = ()=>(
+  <Bundle load={VedioHome}>
+		{(List) => <List/>}
+	</Bundle>
+)
 // 第一种搭配Router使用<Router history={history}/>
 // import createBrowserHistory from 'history/createBrowserHistory'
 // const history = createBrowserHistory()
@@ -136,8 +145,8 @@ const BasicExample = () => (
     <Switch>
       <Route exact path="/" component={BlogIndexs}/>
       <Route path="/login" component={BlogLogin}/>
-      <Route path="/about" component={BlogAbout}/>
-      <Route path="/home" component={BlogHomePage}/>
+      
+      {/* <Route path="/home" component={HomePage}/> */}
       {/* 管理系统 */}
       <PrivateRoute path="/admin" component={props=>(
           <AdminHome {...props}>
@@ -149,20 +158,28 @@ const BasicExample = () => (
           </AdminHome>
       )} />  
       {/* 阅读 */}
-      <Route 
-        path="/article"
-        component={props =>(
-          <Home {...props}>
-            <Route path="/article/skill" component={BlogSkill}/>
-            <Route path="/article/reading" component={BlogReading}/>
-            <Route path="/article/article" component={BlogReading}/>
-            <Route path="/article/life" component={BlogLife}/>
-            <Route path="/article/travel" component={BlogTravel}/>
-            <Route path="/article/articleDetail/:id" component={BlogArticleDetail}/> 
-            {/* <Route path="/article/life" component={Login}/> */}
-          </Home>
-        )}
-      />
+      <Route path="/home" component={props=>(
+        <HomeIndex {...props}>
+          <Route path="/home/homePage" component={BlogHomePage}/>
+          <Route path="/home/about" component={BlogAbout}/>
+          <Route path="/home/vedio" component={BlogVedioHome}/>
+          <Route 
+            path="/home/article"
+            component={props2 =>(
+              <Home {...props2}>
+                <Route path="/home/article/skill" component={BlogSkill}/>
+                <Route path="/home/article/reading" component={BlogReading}/>
+                <Route path="/home/article/article" component={BlogReading}/>
+                <Route path="/home/article/life" component={BlogLife}/>
+                <Route path="/home/article/travel" component={BlogTravel}/>
+                <Route path="/home/article/articleDetail/:id" component={BlogArticleDetail}/> 
+                {/* <Route path="/article/life" component={Login}/> */}
+              </Home>
+            )}
+          />
+        </HomeIndex>
+      )}/>
+      
     </Switch>
   </Router>
 )
