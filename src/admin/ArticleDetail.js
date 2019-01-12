@@ -24,7 +24,7 @@ class ArticleDetail extends React.Component {
     axios.put(`/api/articleCount/add`,{articleId:id})
     .then(res=>{
       this.setState({
-        readCount:res.data.totalCount
+        readCount:res.data.totalCount?res.data.totalCount+1:1
       })
     });
   }
@@ -61,7 +61,7 @@ class ArticleDetail extends React.Component {
             </p>
             <p>{
               data.tag &&data.tag.split(",").map(t=>{
-                return <Tag color={Constant.tagColorList[t]}>
+                return <Tag key={t} color={Constant.tagColorList[t]}>
                   {t}
                 </Tag>
               })

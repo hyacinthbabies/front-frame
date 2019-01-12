@@ -18,10 +18,12 @@ class ArticleAdd extends React.Component{
         loading:false,
         modalVisible:false,
         tagNames:"",//标签名称
+        photoName:"",//图片
         isEdit:false//是否处于编辑状态
     }
 
     componentDidMount(){
+        this.initImg();
         this.props.form.setFieldsValue({
             type:"SKILL_ID"
         });
@@ -59,6 +61,7 @@ class ArticleAdd extends React.Component{
         this.props.form.validateFields((err, values) => {
           if (!err) {
             const params = {
+                image: this.photoName,
                 articleName:values["title"],
                 articleContent:values["editor"],
                 authorName:values["author"],
@@ -75,6 +78,7 @@ class ArticleAdd extends React.Component{
                     message.success("修改成功");
                 });
             }else{
+                console.log(params,"params")
                 axios.post(`/api/postContent`,params)
                 .then(res=>{
                     message.success("保存成功");
@@ -126,6 +130,28 @@ class ArticleAdd extends React.Component{
         })
     }
 
+    initImg = e =>{
+        $("#file").change(()=> {
+            if ($("#file").val() == "") {
+                return false;
+            }
+            let _this = $("#file")[0],
+                _file = _this.files[0],
+                fileType = _file.type;
+            if(fileType.indexOf("image")>-1){
+                let formData = new FormData();
+                formData.append("pic",_file)
+                ApiUtil(formData,`/files/upload`,"POST")
+                .then(res=>{
+                    const photoOriginalName = res.url.split("/");
+                    
+                    this.photoName = photoOriginalName[photoOriginalName.length-1];
+                    
+                })
+            }
+        });
+    }
+
     render(){
         const {isEdit,modalVisible,tagNames} = this.state;
         const { getFieldDecorator } = this.props.form; 
@@ -156,6 +182,12 @@ class ArticleAdd extends React.Component{
                     {getFieldDecorator('author')(
                     <Input placeholder="请输入作者" />
                     )}
+                </FormItem>
+                <FormItem 
+                {...formItemLayout}
+                label="作者"
+                >
+                    <input type="file" id="file" name="pic" /> 
                 </FormItem>
                 <FormItem 
                 {...formItemLayout}

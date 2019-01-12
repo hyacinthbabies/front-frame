@@ -6,6 +6,7 @@ import "./style.less";
 import { withRouter } from 'react-router'
 import {getMenuKeys} from "common/menuUtils";
 import Constant from "common/Constant";
+import BASE_URl from "config";
 const env = "";
 class Skill extends React.Component {
   constructor(props){
@@ -106,8 +107,8 @@ class Skill extends React.Component {
             <List.Item
             onClick={this.onHandleItem.bind(null,item._id)}
             key={item.title}
-            actions={[<IconText type="eye" text={item.count[0]?item.count[0].totalCount:1} />, <IconText type="message" text={item.comments.length} />, <IconText type="clock-circle-o" text={formatMsgTime(new Date(item.articleDate))} />]}
-            extra={<img width={100} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
+            actions={[<IconText type="eye" text={item.count &&item.count[0]?item.count[0].totalCount:0} />, <IconText type="message" text={item.comments.length} />, <IconText type="clock-circle-o" text={formatMsgTime(new Date(item.articleDate))} />]}
+            extra={item.image?<img width={80} height={70} alt="logo" src={BASE_URl+"/avatar/"+item.image} />:null}
             >
             <Skeleton loading={listLoading} active>
             <List.Item.Meta
@@ -116,7 +117,7 @@ class Skill extends React.Component {
                     <div>
                         {
                         item.tag &&item.tag.split(",").map(t=>{
-                          return <Tag color={Constant.tagColorList[t]}>
+                          return <Tag key={t} color={Constant.tagColorList[t]}>
                             {t}
                           </Tag>
                         })

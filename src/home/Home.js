@@ -3,6 +3,7 @@ import { Layout, Menu, Breadcrumb,List, Card, Icon } from 'antd'
 import ApiUtil from "utils/ApiUtil";
 import {Link} from "react-router-dom";
 import { withRouter } from 'react-router'
+import BASE_URl from "config";
 import Constant from "common/Constant"
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
@@ -53,7 +54,7 @@ class Home extends React.Component{
                     key={list._id}
                     style={{ width: 250 }}
                     cover={
-                      [<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+                      [<img alt="example" height={140} src={list.image?BASE_URl+"/avatar/"+list.image:"https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" }/>
                       ,<span className="type_tag">
                         {Constant.typeList[list.articleType]}
                       </span>]
