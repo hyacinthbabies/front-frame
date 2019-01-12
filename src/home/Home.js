@@ -3,6 +3,7 @@ import { Layout, Menu, Breadcrumb,List, Card, Icon } from 'antd'
 import ApiUtil from "utils/ApiUtil";
 import {Link} from "react-router-dom";
 import { withRouter } from 'react-router'
+import Constant from "common/Constant"
 const { Header, Content, Footer } = Layout;
 const { Meta } = Card;
 
@@ -19,8 +20,7 @@ class Home extends React.Component{
   }
 
   componentDidMount(){
-    ApiUtil({articleType:"SKILL_ID",
-    keyword:""},"/api/content/list")
+    ApiUtil({},"/api/newest/list")
     .then(res=>{
       this.setState({listData:res});
     });
@@ -55,7 +55,7 @@ class Home extends React.Component{
                     cover={
                       [<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
                       ,<span className="type_tag">
-                        技术
+                        {Constant.typeList[list.articleType]}
                       </span>]
                     }
                   >
@@ -84,7 +84,7 @@ class Home extends React.Component{
                     cover={
                       [<img alt="example" src="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
                       ,<span className="type_tag">
-                        技术
+                        {Constant.typeList[list.articleType]}
                       </span>]
                     }
                   >

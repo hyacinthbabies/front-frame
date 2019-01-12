@@ -14,7 +14,13 @@ const Constant = {
     "redux":"orange",
     "rxjs":"red",
     "小程序":"green",
-    "mpvue":"pink"
+    "mpvue":"pink",
+    "html5":"",
+    "css3":"",
+    "react-router":"",
+    "vue-router":"",
+    "antd":"",
+    "svg":"#f06"
   }
 }
 export default Constant

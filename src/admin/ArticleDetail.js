@@ -1,7 +1,11 @@
 import React from "react"
-import {Input,List, Avatar,Spin,Form} from "antd";
+import {Input,List, Tag,Spin,Form} from "antd";
 import ApiUtil from "utils/ApiUtil";
 import { withRouter } from 'react-router'
+import Comments from "component/comments"
+import Constant from "common/Constant";
+import {DateFormat} from "utils/dataUtils";
+import axios from "axios";
 const Search = Input.Search;
 const FormItem = Form.Item;
 
@@ -10,7 +14,19 @@ class ArticleDetail extends React.Component {
     date:"",
     data:[],
     currentId:"",
-    loading:false
+    loading:false,
+    commentList:[],
+    readCount:1
+  }
+
+  componentWillMount(){
+    const {params:{id}} = this.props.match;
+    axios.put(`/api/articleCount/add`,{articleId:id})
+    .then(res=>{
+      this.setState({
+        readCount:res.data.totalCount
+      })
+    });
   }
 
   componentDidMount(){
@@ -30,15 +46,27 @@ class ArticleDetail extends React.Component {
   }
 
   render() {
-    const {data,date,currentId,Comment,loading} = this.state;
-    
+    const {data,commentList,currentId,readCount,loading} = this.state;
+    const { getFieldDecorator } = this.props.form;
+    const {params:{id}} = this.props.match;
     return (
       <div className="content-container" style={{boxShadow:"none",borderLeft:"none",background:"#fff",padding:20,width:"100%",maxWidth:"100%" }}>
         <div className="">
           <Spin spinning={loading}>
             {/* 新闻详情 */}
             <h1 className="news-title">{data.articleName}</h1>
-            <p>2018-05-21</p>
+            <p>
+              <span>{DateFormat(new Date(data.articleDate),"yyyy年MM月dd日")}</span>
+              <span style={{marginLeft:20}}>阅读 {readCount}</span>
+            </p>
+            <p>{
+              data.tag &&data.tag.split(",").map(t=>{
+                return <Tag color={Constant.tagColorList[t]}>
+                  {t}
+                </Tag>
+              })
+            }
+            </p>
             {/* <div className="article-sub">
               <span>{data.addUserName}</span>
               <span>
@@ -47,62 +75,11 @@ class ArticleDetail extends React.Component {
             </div> */}
             <div id="content" />
             {/* 评论 */}
-            <div className="comment-box">
-              <div className="comment-title">评论</div>
-              <div className="comment-form">
-                {/* <Form onSubmit={this.handleSubmit} className="login-form">
-                  <FormItem>
-                    {getFieldDecorator("comment")(
-                      <Input.TextArea
-                        rows={4}
-                        placeholder="说说你的看法"
-                        onFocus={this.onFocus}
-                      />
-                    )}
-                  </FormItem>
-                  <FormItem>
-                    <Button
-                      type="primary"
-                      htmlType="submit"
-                      className="login-form-button"
-                      style={{ float: "right" }}
-                    >
-                      评论
-                    </Button>
-                  </FormItem>
-                </Form> */}
-              </div>
-              {/* <div className="comment-content">
-                <List
-                  itemLayout="horizantal"
-                  dataSource={commentList}
-                  renderItem={item => (
-                    <List.Item
-                      key={item.title}
-                      // title={"管理员"}
-                      actions={
-                        [
-                          // <IconText type="dislike" text="隐藏" />
-                          // <IconText
-                          //   type="clock-circle-o"
-                          //   text={formatMsgTime(new Date())}
-                          // />
-                        ]
-                      }
-                    >
-                      <List.Item.Meta
-                        title={<a>{"管理员"}</a>}
-                        description={item.content}
-                      />
-                    </List.Item>
-                  )}
-                />
-              </div> */}
-            </div>
-          </Spin>
+            <Comments articleId={id}/>
+            </Spin>
         </div>
       </div>
     );
   }
 }
-export default withRouter(ArticleDetail);
+export default Form.create()(withRouter(ArticleDetail));

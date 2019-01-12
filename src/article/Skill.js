@@ -1,6 +1,7 @@
 import React from "react"
 import {Input,List, Avatar,Skeleton,Icon,Tag } from "antd";
 import ApiUtil from "utils/ApiUtil";
+import {formatMsgTime} from "utils/dataUtils";
 import "./style.less";
 import { withRouter } from 'react-router'
 import {getMenuKeys} from "common/menuUtils";
@@ -19,6 +20,11 @@ class Skill extends React.Component {
     listLoading:false,
     collapsed:false,
   }
+
+  componentWillMount(){
+    
+  }
+
   componentDidMount(){
     const {state} = this.props.location;
     //如果从首页入口进去，则默认查询技术类文档
@@ -100,7 +106,7 @@ class Skill extends React.Component {
             <List.Item
             onClick={this.onHandleItem.bind(null,item._id)}
             key={item.title}
-            actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+            actions={[<IconText type="eye" text={item.count[0]?item.count[0].totalCount:1} />, <IconText type="message" text={item.comments.length} />, <IconText type="clock-circle-o" text={formatMsgTime(new Date(item.articleDate))} />]}
             extra={<img width={100} alt="logo" src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png" />}
             >
             <Skeleton loading={listLoading} active>
@@ -115,7 +121,6 @@ class Skill extends React.Component {
                           </Tag>
                         })
                       }
-                      <div><IconText type="clock-circle-o" text={item.articleDate} /></div>
                     </div>
                 }
             />

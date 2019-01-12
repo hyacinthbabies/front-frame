@@ -4,7 +4,8 @@ import ApiUtil from "utils/ApiUtil";
 import "./style.less";
 import { withRouter } from 'react-router'
 import {getMenuKeys} from "common/menuUtils";
-import Constant from "common/Constant"
+import Constant from "common/Constant";
+import {formatMsgTime} from "utils/dataUtils";
 const Search = Input.Search;
 const IconText = ({ type, text }) => (
   <span>
@@ -122,7 +123,6 @@ class Reading extends React.Component {
                     </span>}
                   description={
                     <div>
-                      <div><IconText type="clock-circle-o" text={item.articleDate} /></div>
                       {
                         item.tag &&item.tag.split(",").map(t=>{
                           return <Tag color={this.tagColorList[t]}>
@@ -130,6 +130,8 @@ class Reading extends React.Component {
                           </Tag>
                         })
                       }
+                      <div><IconText type="clock-circle-o" text={formatMsgTime(new Date(item.articleDate))} /></div>
+
                     </div>
                   }
                 />
