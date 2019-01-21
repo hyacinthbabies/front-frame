@@ -98,7 +98,6 @@ class Reading extends React.Component {
 
   render() {
     const {data,articleDetail,currentId,Comment,listLoading,detailLoading,collapsed} = this.state;
-    console.log(Constant.typeList);
     return (
       [!collapsed?<div className="article-container" style={{flex:1,display: "flex",background:"#fff",
         flexDirection: "column"}} key="1">

@@ -23,8 +23,9 @@ import HomePage from "bundle-loader?lazy!./home/Home";
 import Bundle from './bundle.js';
 import Skill from "bundle-loader?lazy!./article/Skill";
 import Travel from "bundle-loader?lazy!./article/Travel";
-import VedioHome from "bundle-loader?lazy!./vedio"
-
+import VedioHome from "bundle-loader?lazy!./vedio";
+import WeeklyHome from "bundle-loader?lazy!./week";
+import WeekList from "bundle-loader?lazy!./week/WeekList";
 const BlogIndexs = () => (
 	<Bundle load={Indexs}>
 		{(List) => <List/>}
@@ -109,6 +110,18 @@ const BlogVedioHome = ()=>(
 		{(List) => <List/>}
 	</Bundle>
 )
+
+const BlogWeeklyHome = ()=>(
+  <Bundle load={WeeklyHome}>
+		{(List) => <List/>}
+	</Bundle>
+)
+
+const BlogWeekList = ()=>(
+  <Bundle load={WeekList}>
+		{(List) => <List/>}
+	</Bundle>
+)
 // 第一种搭配Router使用<Router history={history}/>
 // import createBrowserHistory from 'history/createBrowserHistory'
 // const history = createBrowserHistory()
@@ -163,6 +176,9 @@ const BasicExample = () => (
           <Route path="/home/homePage" component={BlogHomePage}/>
           <Route path="/home/about" component={BlogAbout}/>
           <Route path="/home/vedio" component={BlogVedioHome}/>
+          <Route path="/home/week" component={BlogWeeklyHome}/> 
+          {/* <Route path="/home/weekList" component={BlogWeekList}/>  */}
+
           <Route 
             path="/home/article"
             component={props2 =>(
@@ -172,6 +188,8 @@ const BasicExample = () => (
                 <Route path="/home/article/article" component={BlogReading}/>
                 <Route path="/home/article/life" component={BlogLife}/>
                 <Route path="/home/article/travel" component={BlogTravel}/>
+                <Route path="/home/article/weekList" component={BlogWeekList}/> 
+                
                 <Route path="/home/article/articleDetail/:id" component={BlogArticleDetail}/> 
                 {/* <Route path="/article/life" component={Login}/> */}
               </Home>

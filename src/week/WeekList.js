@@ -8,7 +8,7 @@ import {getMenuKeys} from "common/menuUtils";
 import Constant from "common/Constant";
 import BASE_URl from "config";
 const env = "";
-class Skill extends React.Component {
+class WeekList extends React.Component {
   constructor(props){
     super(props);
   }
@@ -132,4 +132,4 @@ class Skill extends React.Component {
         )
     }
 }
-export default withRouter(Skill);
+export default withRouter(WeekList);

@@ -55,6 +55,7 @@ class SiderDemo extends React.Component {
    * 点击菜单
    */
   onClickMenu = item=>{
+    console.log(item)
     this.setState({
       currentKey:item.key
     })
@@ -66,11 +67,15 @@ class SiderDemo extends React.Component {
             this.props.history.push("/home/article/reading",{id:"BOOK_ID"});
             break;
         case "3":
-            this.props.history.push("/home/article/life",{id:"LIFE_ID"});
+            this.props.history.push("/home/article/weekList",{id:"WEEK_ID"});
             break; 
         case "4":
+            this.props.history.push("/home/article/life",{id:"LIFE_ID"});
+            break; 
+        case "5":
             this.props.history.push("/home/article/travel",{id:"TRAVEL_ID"});
             break;  
+        
         default:
           break;
     }
@@ -111,13 +116,20 @@ class SiderDemo extends React.Component {
               </span>
             </Menu.Item>
             <Menu.Item key="3">
+              <Icon className="iconfont article-menu-icon">&#xe628;</Icon>
+              <span className="article-menu-item">每周一练</span>
+              <span style={{marginLeft:20}}>
+              {getValueById("WEEK_ID",this.state.countList)["count"]}
+              </span>
+            </Menu.Item>
+            <Menu.Item key="4">
               <Icon className="iconfont article-menu-icon">&#xe614;</Icon>
               <span className="article-menu-item">生活</span>
               <span style={{marginLeft:20}}>
               {getValueById("LIFE_ID",this.state.countList)["count"]}
               </span>
             </Menu.Item>
-            <Menu.Item key="4">
+            <Menu.Item key="5">
               <Icon className="iconfont article-menu-icon">&#xe601;</Icon>
               <span className="article-menu-item">旅行</span>
               

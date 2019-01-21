@@ -15,12 +15,13 @@ const Constant = {
     "rxjs":"red",
     "小程序":"green",
     "mpvue":"pink",
-    "html5":"",
-    "css3":"",
-    "react-router":"",
+    "html5":"#de73bd",
+    "css":"#748dc5",
+    "react-router":"indigo",
     "vue-router":"",
     "antd":"",
-    "svg":"#f06"
+    "svg":"#f06",
+    "js":"black"
   }
 }
 export default Constant

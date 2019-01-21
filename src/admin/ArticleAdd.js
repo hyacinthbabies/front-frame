@@ -78,7 +78,6 @@ class ArticleAdd extends React.Component{
                     message.success("修改成功");
                 });
             }else{
-                console.log(params,"params")
                 axios.post(`/api/postContent`,params)
                 .then(res=>{
                     message.success("保存成功");
@@ -209,6 +208,7 @@ class ArticleAdd extends React.Component{
                                 <Option value="LIFE_ID">生活类</Option>
                                 <Option value="BOOK_ID">书籍类</Option>
                                 <Option value="TRAVEL_ID">旅行类</Option>
+                                <Option value="WEEK_ID">每周一练</Option>
                             </Select>
                         )
                     }

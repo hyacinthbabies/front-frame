@@ -19,10 +19,11 @@ class Reading extends React.Component {
 
   getPicList = filter =>{
     let param = {
-      tag:"",
+      articleType:"LIFE_ID",
+      keyword:""
     }
     //查询列表
-    ApiUtil(param,"/api/getPhotoList")
+    ApiUtil(param,"/api/content/list")
     .then(res=>{
       this.setState({dataList:res},()=>{
         this.initPic();
@@ -97,7 +98,7 @@ class Reading extends React.Component {
     };
 
     // Capture scroll event.
-    $window.bind('scroll.wookmark', onScroll);
+    // $window.bind('scroll.wookmark', onScroll);
 
     // Setup filter buttons when jQuery is available
     let $filters = $('#filters li');
@@ -132,20 +133,20 @@ class Reading extends React.Component {
     const {dataList} = this.state;
     return (
         <div role="main" className="photo_container">
-        <ol id="filters">
+        {/* <ol id="filters">
           <li data-filter="all">全部</li>
-        </ol>
+        </ol> */}
           <ul id="container" className="tiles-wrap animated">
           {
             dataList.map((list,index)=>{
               return <li key={index}>
-                <a href={BASE_URl+"/avatar/"+list.photoName}>
-                  <img src={BASE_URl+"/avatar/"+list.photoName} width="100" height="300"/>
+                <a href={BASE_URl+"/avatar/"+list.image}>
+                  <img src={BASE_URl+"/avatar/"+list.image} width="100" height="300"/>
                 </a>
                 <div className="photo_desciption">
                   {/* <span>{list.photoDate}</span> */}
-                  <p>{list.location}</p>
-                  <span>{list.photoDesciption}</span>
+                  {/* <p>{list.location}</p> */}
+                  <span>{list.articleName}</span>
                 </div>
               </li>
             })

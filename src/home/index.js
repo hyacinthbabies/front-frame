@@ -100,8 +100,8 @@ class Index extends React.Component{
                 <ul>
                     <li><Link to="/home/homePage">主页</Link></li>
                     <li><Link to="/home/article/skill">分享</Link></li>
-                    <li><Link to="/home/life">每周一技</Link></li>
-                    <li><Link to="/home/vedio">声相</Link></li>
+                    <li><Link to="/home/week">每周一练</Link></li>
+                    {/* <Link><Link to="/home/vedio">周边</Link></Link> */}
                     <li><Link to="/home/about">关于我</Link></li>
                     <li><Link to="/login">管理入口</Link></li>
                 </ul>

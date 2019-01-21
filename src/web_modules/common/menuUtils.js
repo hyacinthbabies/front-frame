@@ -3,8 +3,9 @@ let headMap = { air:"1" };
 let menuMap = {
     skill:{ subKey:"sub1",key:"1",id:"SKILL_ID"},
     reading:{ subKey:"sub1",key:"2",id:"BOOK_ID"},
-    life:{ subKey:"sub1",key:"3",id:"LIFE_ID"},
-    travel:{ subKey:"sub1",key:"4",id:"TRAVEL_ID"}
+    life:{ subKey:"sub1",key:"4",id:"LIFE_ID"},
+    travel:{ subKey:"sub1",key:"5",id:"TRAVEL_ID"},
+    weekList:{subKey:"sub1",key:"3",id:"BOOK_ID"}
 };
 
 export const getHeadKey = ()=> {
