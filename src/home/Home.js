@@ -75,11 +75,6 @@ class Home extends React.Component{
             }
             </div>
           </section>
-          <section>
-            <p>每周一练</p>
-            <div className="card-container">
-            </div>
-          </section>
         </Content>
       </Layout>
     

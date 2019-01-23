@@ -31,7 +31,7 @@ class Comment extends React.Component {
 
   onReplyComment=id=>{
     
-    if(localStorage.getItem("userId") && id !== this.state.currentId){
+    if(localStorage.getItem("userInfo") && id !== this.state.currentId){
       this.setState({
         currentId:id
       })

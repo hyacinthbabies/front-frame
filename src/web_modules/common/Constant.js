@@ -21,7 +21,8 @@ const Constant = {
     "vue-router":"",
     "antd":"",
     "svg":"#f06",
-    "js":"black"
+    "js":"black",
+    "文学":"volcano"
   }
 }
 export default Constant

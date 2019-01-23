@@ -51,7 +51,7 @@ class CommentItem extends React.Component {
         author={<a>{item.commentId?item.fromUserName:item.userName}</a>}
         avatar={(
           <Avatar
-            src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
+            src={item.commentId?item.toAvatarUrl:item.avatarUrl}
             alt="Han Solo"
           />
         )}

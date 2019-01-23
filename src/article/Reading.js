@@ -1,11 +1,12 @@
 import React from "react"
-import {Input,List, Avatar,Spin,Icon,Tag} from "antd";
+import {Input,List, Skeleton,Spin,Icon,Tag} from "antd";
 import ApiUtil from "utils/ApiUtil";
 import "./style.less";
 import { withRouter } from 'react-router'
 import {getMenuKeys} from "common/menuUtils";
 import Constant from "common/Constant";
 import {formatMsgTime} from "utils/dataUtils";
+import Comments from "component/comments"
 const Search = Input.Search;
 const IconText = ({ type, text }) => (
   <span>
@@ -107,36 +108,38 @@ class Reading extends React.Component {
             placeholder="输入搜索内容"/>
         </div>
         <div className="article-list">
-          <List
-            className="demo-loadmore-list"
-            loading={listLoading}
-            itemLayout="horizontal"
-            // loadMore={loadMore}
-            dataSource={data}
-            renderItem={item => (
-              <List.Item onClick={this.onHandleItem.bind(null,item._id)} style={item._id === currentId?{background:"#f1ededc7"}:{background:"#fff"}}>
-                <List.Item.Meta
-                  title={
-                    <span>
-                      {item.articleName}
-                    </span>}
-                  description={
+        <List
+        itemLayout="vertical"
+        size="large"
+        style={{background:"#fff",width:"100%"}}
+        loading={listLoading}
+        dataSource={data}
+        renderItem={item => (
+            <List.Item
+            onClick={this.onHandleItem.bind(null,item._id)}
+            key={item.title}
+            actions={[<IconText type="message" text={item.comments.length} />, <IconText type="clock-circle-o" text={formatMsgTime(new Date(item.articleDate))} />]}
+            >
+            <Skeleton loading={listLoading} active>
+            <List.Item.Meta
+                title={<a>{item.articleName}</a>}
+                description={
                     <div>
-                      {
+                        {
                         item.tag &&item.tag.split(",").map(t=>{
-                          return <Tag color={this.tagColorList[t]}>
+                          return <Tag key={t} color={Constant.tagColorList[t]}>
                             {t}
                           </Tag>
                         })
                       }
-                      <div><IconText type="clock-circle-o" text={formatMsgTime(new Date(item.articleDate))} /></div>
-
                     </div>
-                  }
-                />
-              </List.Item>
-            )}
-          />
+                }
+            />
+            </Skeleton>
+            {item.content}
+            </List.Item>
+        )}
+        />
 
         </div>
       </div>:null,
@@ -152,8 +155,10 @@ class Reading extends React.Component {
           </div>
           <div className="publish-detail" style={collapsed?{paddingLeft: "20%",paddingRight: "20%"}:{}}>
             <Spin spinning={detailLoading}>
-              <h2 style={{textAlign:"center"}}>{articleDetail.articleName}</h2>
+              {/* <h2 style={{textAlign:"center"}}>{articleDetail.articleName}</h2> */}
               <div id="content"></div>
+              {/* 评论 */}
+              <Comments articleId={data[0]?data[0]._id:""}/>
             </Spin> 
           </div>
           

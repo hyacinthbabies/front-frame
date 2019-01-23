@@ -129,11 +129,11 @@ class SiderDemo extends React.Component {
               {getValueById("LIFE_ID",this.state.countList)["count"]}
               </span>
             </Menu.Item>
-            <Menu.Item key="5">
+            {/* <Menu.Item key="5">
               <Icon className="iconfont article-menu-icon">&#xe601;</Icon>
               <span className="article-menu-item">旅行</span>
               
-            </Menu.Item>
+            </Menu.Item> */}
           </Menu>
         </Sider>
         <Layout>
